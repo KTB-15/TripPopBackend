@@ -3,20 +3,20 @@ package com.kakaotech.back.repository;
 import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import static org.mockito.Mockito.*;
-
-@ExtendWith(MockitoExtension.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class FavouriteRepositoryTest {
 
-    @Mock
+    @Autowired
     private FavouriteRepository favouriteRepository;
+    @Autowired
+    private PlaceRepository placeRepository;
 
     private Favourite favourite1;
     private Place place1;
@@ -30,6 +30,7 @@ public class FavouriteRepositoryTest {
                 .xCoord(126.0)
                 .yCoord(36.0)
                 .build();
+        placeRepository.save(place1);
         favourite1 = Favourite.builder()
                 .place(place1)
                 .registerAt(LocalDateTime.now())
@@ -38,6 +39,7 @@ public class FavouriteRepositoryTest {
 
     @AfterEach
     void cleanup() {
+        placeRepository.deleteAll();
         favouriteRepository.deleteAll();
     }
 
@@ -45,7 +47,7 @@ public class FavouriteRepositoryTest {
     @DisplayName("장소 얻기")
     void testGetPlace() {
         // Arrange
-        when(favouriteRepository.findAll()).thenReturn(List.of(favourite1));
+        favouriteRepository.save(favourite1);
         // Act
         Favourite retrievedFavourite = favouriteRepository.findAll().getFirst();
         // Assert

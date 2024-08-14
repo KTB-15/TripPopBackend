@@ -16,9 +16,6 @@ spring:
     url: ${LOCAL_POSTGRESQL_URL}
     username: ${LOCAL_POSTGRESQL_USERNAME}
     password: ${LOCAL_POSTGRESQL_PASSWORD}
-  data:
-    mongodb:
-      uri: ${LOCAL_MONGODB_URI}
   jpa:
     hibernate:
       ddl-auto: update
@@ -39,9 +36,6 @@ spring:
     url: ${DEV_POSTGRESQL_URL}
     username: ${DEV_POSTGRESQL_USERNAME}
     password: ${DEV_POSTGRESQL_PASSWORD}
-  data:
-    mongodb:
-      uri: ${DEV_MONGODB_URI}
   jpa:
     hibernate:
       ddl-auto: update

@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 public class Place {
     @Id
-    private Long id; // 아직까지 생성될 일이 없어서 GeneratedValue 미적용
+    private String id; // 아직까지 생성될 일이 없어서 GeneratedValue 미적용
     @Column(name = "area_name")
     private String areaName;
     @Column(name = "road_name")

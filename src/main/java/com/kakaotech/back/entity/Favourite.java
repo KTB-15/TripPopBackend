@@ -26,6 +26,7 @@ public class Favourite {
 //    private Member member;
 
     @CreatedDate
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;
 
     @Builder

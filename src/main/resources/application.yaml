@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: TripPop
+  profiles:
+    active: "local"
+
+---
+# local
+server:
+  port: ${LOCAL_PORT:8080}
+spring:
+  config:
+    activate:
+      on-profile: "local"
+  datasource:
+    url: ${LOCAL_POSTGRESQL_URL}
+    username: ${LOCAL_POSTGRESQL_USERNAME}
+    password: ${LOCAL_POSTGRESQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+---
+# dev
+server:
+  port: ${DEV_PORT:8080}
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+  datasource:
+    url: ${DEV_POSTGRESQL_URL}
+    username: ${DEV_POSTGRESQL_USERNAME}
+    password: ${DEV_POSTGRESQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update

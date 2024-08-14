@@ -6,6 +6,6 @@ RUN gradle build --no-daemon
 
 # 2. Run stage
 FROM openjdk:21
-ARG JAR_FILE=build/libs/*.jar
-COPY --from=build /app/${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app/app.jar"]

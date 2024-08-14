@@ -27,7 +27,7 @@ spring:
 ---
 # dev
 server:
-  port: ${DEV_PORT:80}
+  port: ${DEV_PORT:8080}
 spring:
   config:
     activate:

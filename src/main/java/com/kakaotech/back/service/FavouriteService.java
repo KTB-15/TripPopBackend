@@ -12,10 +12,12 @@ import com.kakaotech.back.entity.TempMember;
 import com.kakaotech.back.repository.FavouriteRepository;
 import com.kakaotech.back.repository.PlaceRepository;
 import com.kakaotech.back.repository.TempMemberRepository;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +31,14 @@ public class FavouriteService {
         this.favouriteRepository = favouriteRepository;
         this.memberRepository = memberRepository;
         this.placeRepository = placeRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Favourite> getFavourites(String memberId) {
+        Optional<TempMember> member = memberRepository.findById(memberId);
+        if(member.isEmpty()) throw new MemberException(ErrorMessage.USER_NOT_FOUND);
+
+        return favouriteRepository.findByMember(member.get()).get();
     }
 
     @Transactional

@@ -18,6 +18,11 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    TODO: Merge시 원본 Member로 변경해야함
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private TempMember member;
+
     @ManyToOne
     @JoinColumn(name = "place_id")
     private Place place;

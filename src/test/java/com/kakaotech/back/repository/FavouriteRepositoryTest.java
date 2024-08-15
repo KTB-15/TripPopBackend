@@ -2,6 +2,7 @@ package com.kakaotech.back.repository;
 
 import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
 public class FavouriteRepositoryTest {
 
     @Autowired

@@ -13,6 +13,7 @@ import com.kakaotech.back.repository.FavouriteRepository;
 import com.kakaotech.back.repository.PlaceRepository;
 import com.kakaotech.back.repository.TempMemberRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +22,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class FavouriteService {
     private final FavouriteRepository favouriteRepository;
     private final TempMemberRepository memberRepository;
     private final PlaceRepository placeRepository;
-
-    @Autowired
-    public FavouriteService(FavouriteRepository favouriteRepository, TempMemberRepository memberRepository, PlaceRepository placeRepository) {
-        this.favouriteRepository = favouriteRepository;
-        this.memberRepository = memberRepository;
-        this.placeRepository = placeRepository;
-    }
 
     @Transactional(readOnly = true)
     public List<Favourite> getFavourites(String memberId) {

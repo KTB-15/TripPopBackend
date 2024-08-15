@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RegisterFavouriteDto {
     private String memberId;
-    private Long placeId;
+    private String placeId;
 }

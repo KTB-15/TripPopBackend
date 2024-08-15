@@ -1,7 +1,6 @@
 package com.kakaotech.back.controller;
 
 import com.kakaotech.back.common.api.ApiResponse;
-import com.kakaotech.back.dto.favourite.DeleteFavouriteDto;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.service.FavouriteService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,9 @@ public class FavouriteController {
         return ResponseEntity.ok(ApiResponse.success(true));
     }
 
-    @DeleteMapping
-    public ResponseEntity<ApiResponse<Long>> deleteFavourite(DeleteFavouriteDto dto) {
-        favouriteService.deleteFavourite(dto);
-        return ResponseEntity.ok(ApiResponse.success(dto.getFavouriteId()));
+    @DeleteMapping("/{favouriteId}")
+    public ResponseEntity<ApiResponse<Long>> deleteFavourite(@PathVariable Long favouriteId) {
+        favouriteService.deleteFavourite(favouriteId);
+        return ResponseEntity.ok(ApiResponse.success(favouriteId));
     }
 }

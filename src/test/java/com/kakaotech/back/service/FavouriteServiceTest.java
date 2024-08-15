@@ -96,15 +96,14 @@ public class FavouriteServiceTest {
     void testDeleteFavourite() {
         // Arrange
         Long favouriteId = 1L;
-        DeleteFavouriteDto dto = DeleteFavouriteDto.builder().favouriteId(favouriteId).build();
-        when(favouriteRepository.existsById(dto.getFavouriteId())).thenReturn(true);
+        when(favouriteRepository.existsById(favouriteId)).thenReturn(true);
 
         // When
-        Long deletedFavouriteId = favouriteService.deleteFavourite(dto);
+        Long deletedFavouriteId = favouriteService.deleteFavourite(favouriteId);
 
         // Then
         assertEquals(1L, deletedFavouriteId);
-        verify(favouriteRepository, times(1)).existsById(dto.getFavouriteId());
-        verify(favouriteRepository, times(1)).deleteById(dto.getFavouriteId());
+        verify(favouriteRepository, times(1)).existsById(favouriteId);
+        verify(favouriteRepository, times(1)).deleteById(favouriteId);
     }
 }

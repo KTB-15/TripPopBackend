@@ -59,11 +59,11 @@ public class FavouriteService {
     }
 
     @Transactional
-    public Long deleteFavourite(DeleteFavouriteDto dto) {
-        if (!favouriteRepository.existsById(dto.getFavouriteId())) {
+    public Long deleteFavourite(Long favouriteId) {
+        if (!favouriteRepository.existsById(favouriteId)) {
             throw new FavouriteException(ErrorMessage.FAVOURITE_NOT_FOUND);
         }
-        favouriteRepository.deleteById(dto.getFavouriteId());
-        return dto.getFavouriteId();
+        favouriteRepository.deleteById(favouriteId);
+        return favouriteId;
     }
 }

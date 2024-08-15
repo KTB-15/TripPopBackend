@@ -21,7 +21,7 @@ public class Favourite {
     @JoinColumn(name = "place_id")
     private Place place;
 
-//    TODO: Merge시 원본 Member로 변경해야함
+    //    TODO: Merge시 원본 Member로 변경해야함
     @ManyToOne
     @JoinColumn(name = "member_id")
     private TempMember member;
@@ -31,8 +31,9 @@ public class Favourite {
     private LocalDateTime registerAt;
 
     @Builder
-    public Favourite(Place place, LocalDateTime registerAt) {
+    public Favourite(Place place, LocalDateTime registerAt, TempMember member) {
         this.place = place;
         this.registerAt = registerAt;
+        this.member = member;
     }
 }

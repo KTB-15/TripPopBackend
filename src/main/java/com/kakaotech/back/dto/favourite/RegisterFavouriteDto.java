@@ -1,13 +1,11 @@
 package com.kakaotech.back.dto.favourite;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class RegisterFavouriteDto {
     private String memberId;
     private String placeId;

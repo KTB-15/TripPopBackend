@@ -44,11 +44,11 @@ public class FavouriteService {
     @Transactional
     public Boolean registerFavourite(RegisterFavouriteDto dto) {
         Optional<TempMember> member = memberRepository.findById(dto.getMemberId());
-        Optional<Place> place = placeRepository.findById(dto.getPlaceId());
         // Member 찾기
         if (member.isEmpty()) {
             throw new MemberException(ErrorMessage.USER_NOT_FOUND);
         }
+        Optional<Place> place = placeRepository.findById(dto.getPlaceId());
         // Place 찾기
         if (place.isEmpty()) {
             throw new PlaceException(ErrorMessage.PLACE_NOT_FOUND);

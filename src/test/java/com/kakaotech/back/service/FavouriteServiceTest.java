@@ -1,7 +1,6 @@
 package com.kakaotech.back.service;
 
 import com.kakaotech.back.common.exception.MemberException;
-import com.kakaotech.back.dto.favourite.DeleteFavouriteDto;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;

@@ -1,5 +1,6 @@
 package com.kakaotech.back.dto.favourite;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -7,6 +8,9 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class RegisterFavouriteDto {
+
+    @NotBlank
     private String memberId;
+    @NotBlank
     private String placeId;
 }

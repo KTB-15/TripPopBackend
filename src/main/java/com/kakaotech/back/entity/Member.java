@@ -29,7 +29,9 @@ public class Member {
     private String nickname;
 
     @NotBlank
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private Gender gender;
 
     @NotBlank
     private Integer age;

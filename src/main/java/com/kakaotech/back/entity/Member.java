@@ -1,9 +1,6 @@
 package com.kakaotech.back.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -69,6 +66,10 @@ public class Member {
     @CreatedDate
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;
+
+    @OneToOne
+    @JoinColumn(name = "sgg_id")
+    private SGG sgg;
 
     public void SetTravelStyle1(String travelStyle1) {
         this.travelStyle1 = travelStyle1;

@@ -9,8 +9,8 @@ import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.FavouriteRepository;
+import com.kakaotech.back.repository.MemberRepository;
 import com.kakaotech.back.repository.PlaceRepository;
-import com.kakaotech.back.repository.TempMemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FavouriteService {
     private final FavouriteRepository favouriteRepository;
-    private final TempMemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final PlaceRepository placeRepository;
 
     @Transactional(readOnly = true)

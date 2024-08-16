@@ -6,8 +6,8 @@ import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.FavouriteRepository;
+import com.kakaotech.back.repository.MemberRepository;
 import com.kakaotech.back.repository.PlaceRepository;
-import com.kakaotech.back.repository.TempMemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class FavouriteServiceTest {
     private FavouriteRepository favouriteRepository;
 
     @Mock
-    private TempMemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Mock
     private PlaceRepository placeRepository;

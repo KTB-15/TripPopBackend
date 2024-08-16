@@ -22,6 +22,10 @@ public class History {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "place_id")
+    private Place place;
+
     @CreatedDate
     @Column(name = "register_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;

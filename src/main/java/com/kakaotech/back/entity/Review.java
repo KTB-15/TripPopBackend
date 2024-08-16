@@ -19,11 +19,11 @@ public class Review {
     private Long id;
 
     //    TODO: Merge시 원본 Member로 변경해야함
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private TempMember member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     private Place place;
 

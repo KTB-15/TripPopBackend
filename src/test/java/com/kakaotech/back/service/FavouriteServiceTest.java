@@ -4,10 +4,10 @@ import com.kakaotech.back.common.exception.MemberException;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
-import com.kakaotech.back.entity.TempMember;
+import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.FavouriteRepository;
+import com.kakaotech.back.repository.MemberRepository;
 import com.kakaotech.back.repository.PlaceRepository;
-import com.kakaotech.back.repository.TempMemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class FavouriteServiceTest {
     private FavouriteRepository favouriteRepository;
 
     @Mock
-    private TempMemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Mock
     private PlaceRepository placeRepository;
@@ -37,13 +37,13 @@ public class FavouriteServiceTest {
     @InjectMocks
     private FavouriteService favouriteService;
 
-    private TempMember member;
+    private Member member;
     private Place place;
     private Favourite favourite;
 
     @BeforeEach
     void setUp() {
-        member = TempMember.builder()
+        member = Member.builder()
                 .id("MEMBERID")
                 .build();
         place = Place.builder()

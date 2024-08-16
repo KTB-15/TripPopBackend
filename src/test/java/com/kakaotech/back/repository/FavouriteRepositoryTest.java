@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Transactional
 public class FavouriteRepositoryTest {
 
     @Autowired

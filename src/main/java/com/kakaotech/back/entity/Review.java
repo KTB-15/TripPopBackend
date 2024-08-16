@@ -13,15 +13,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    TODO: Merge시 원본 Member로 변경해야함
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "member_id")
-    private TempMember member;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
@@ -36,13 +36,4 @@ public class Review {
     @LastModifiedDate
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
-
-    @Builder
-    public Review(TempMember member, Place place, String content, LocalDateTime registerAt, LocalDateTime updatedAt) {
-        this.member = member;
-        this.place = place;
-        this.content = content;
-        this.registerAt = registerAt;
-        this.updatedAt = updatedAt;
-    }
 }

@@ -74,16 +74,13 @@ public class Member {
     @JoinColumn(name = "sgg_id")
     private SGG sgg;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "visit_id")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Visit> visits;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "favourite_id")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Favourite> favourites;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
     @OneToMany(fetch = FetchType.LAZY)

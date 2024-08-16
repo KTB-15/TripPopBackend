@@ -26,6 +26,10 @@ public class History {
     @JoinColumn(name = "place_id")
     private Place place;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @CreatedDate
     @Column(name = "register_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;

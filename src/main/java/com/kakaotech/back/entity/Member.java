@@ -83,7 +83,6 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "history_id")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<History> histories;
 }

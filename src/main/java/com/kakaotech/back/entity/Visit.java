@@ -17,7 +17,6 @@ public class Visit {
     @JoinColumn(name = "place_id")
     private Place place;
 
-    //    TODO: Merge시 원본 Member로 변경해야함
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;

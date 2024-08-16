@@ -13,7 +13,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "sgg")
 public class SGG {
 
     @Id

@@ -21,7 +21,7 @@ public class Review {
     //    TODO: Merge시 원본 Member로 변경해야함
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private TempMember member;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "place_id")
@@ -38,7 +38,7 @@ public class Review {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Review(TempMember member, Place place, String content, LocalDateTime registerAt, LocalDateTime updatedAt) {
+    public Review(Member member, Place place, String content, LocalDateTime registerAt, LocalDateTime updatedAt) {
         this.member = member;
         this.place = place;
         this.content = content;

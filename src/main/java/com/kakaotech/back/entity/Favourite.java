@@ -24,14 +24,14 @@ public class Favourite {
     //    TODO: Merge시 원본 Member로 변경해야함
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private TempMember member;
+    private Member member;
 
     @CreatedDate
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;
 
     @Builder
-    public Favourite(Place place, LocalDateTime registerAt, TempMember member) {
+    public Favourite(Place place, LocalDateTime registerAt, Member member) {
         this.place = place;
         this.registerAt = registerAt;
         this.member = member;

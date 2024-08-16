@@ -19,7 +19,7 @@ public class Visit {
     //    TODO: Merge시 원본 Member로 변경해야함
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private TempMember member;
+    private Member member;
 
     @Column(name = "residence_time")
     private int residenceTime;
@@ -33,7 +33,7 @@ public class Visit {
     private int revisitIntention;
 
     @Builder
-    private Visit(Place place, TempMember member, int residenceTime, int visitTypeCode, String revisitYN, int rating, int revisitIntention) {
+    private Visit(Place place, Member member, int residenceTime, int visitTypeCode, String revisitYN, int rating, int revisitIntention) {
         this.place = place;
         this.member = member;
         this.residenceTime = residenceTime;

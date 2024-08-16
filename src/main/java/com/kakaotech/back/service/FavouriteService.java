@@ -7,7 +7,7 @@ import com.kakaotech.back.common.exception.PlaceException;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
-import com.kakaotech.back.entity.TempMember;
+import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.FavouriteRepository;
 import com.kakaotech.back.repository.PlaceRepository;
 import com.kakaotech.back.repository.TempMemberRepository;
@@ -28,7 +28,7 @@ public class FavouriteService {
 
     @Transactional(readOnly = true)
     public List<Favourite> getFavourites(String memberId) {
-        Optional<TempMember> member = memberRepository.findById(memberId);
+        Optional<Member> member = memberRepository.findById(memberId);
         if(member.isEmpty()) throw new MemberException(ErrorMessage.USER_NOT_FOUND);
 
         return favouriteRepository.findByMember(member.get()).get();
@@ -36,7 +36,7 @@ public class FavouriteService {
 
     @Transactional
     public Boolean registerFavourite(RegisterFavouriteDto dto) {
-        Optional<TempMember> member = memberRepository.findById(dto.getMemberId());
+        Optional<Member> member = memberRepository.findById(dto.getMemberId());
         // Member 찾기
         if (member.isEmpty()) {
             throw new MemberException(ErrorMessage.USER_NOT_FOUND);

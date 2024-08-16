@@ -16,11 +16,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Builder
-// TODO: merge 시 삭제
-public class TempMember {
+public class Member {
     @Id
     private String id;
-    @Column(name = "member_id")
+    @Column(name = "member_id", unique = true)
     private String memberId;
     private String password;
     private String nickname;

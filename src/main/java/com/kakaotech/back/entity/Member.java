@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -70,6 +71,10 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "sgg_id")
     private SGG sgg;
+
+    @OneToMany
+    @JoinColumn(name = "visit_id")
+    private List<Visit> visits;
 
     public void SetTravelStyle1(String travelStyle1) {
         this.travelStyle1 = travelStyle1;

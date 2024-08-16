@@ -76,6 +76,12 @@ public class Member {
     @JoinColumn(name = "visit_id")
     private List<Visit> visits;
 
+    @OneToMany
+    @JoinColumn(name = "favourite_id")
+    private List<Favourite> favourites;
+
+    
+
     public void SetTravelStyle1(String travelStyle1) {
         this.travelStyle1 = travelStyle1;
     }

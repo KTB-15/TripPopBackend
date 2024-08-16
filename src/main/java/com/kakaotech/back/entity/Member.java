@@ -72,19 +72,19 @@ public class Member {
     @JoinColumn(name = "sgg_id")
     private SGG sgg;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "visit_id")
     private List<Visit> visits;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "favourite_id")
     private List<Favourite> favourites;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private List<Review> reviews;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "history_id")
     private List<History> histories;
 

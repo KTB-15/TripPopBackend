@@ -84,7 +84,9 @@ public class Member {
     @JoinColumn(name = "review_id")
     private List<Review> reviews;
 
-    
+    @OneToMany
+    @JoinColumn(name = "history_id")
+    private List<History> histories;
 
     public void SetTravelStyle1(String travelStyle1) {
         this.travelStyle1 = travelStyle1;

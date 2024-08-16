@@ -80,6 +80,10 @@ public class Member {
     @JoinColumn(name = "favourite_id")
     private List<Favourite> favourites;
 
+    @OneToMany
+    @JoinColumn(name = "review_id")
+    private List<Review> reviews;
+
     
 
     public void SetTravelStyle1(String travelStyle1) {

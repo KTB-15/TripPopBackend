@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,15 +32,4 @@ public class Visit {
     private int rating;
     @Column(name = "revisit_intention")
     private int revisitIntention;
-
-    @Builder
-    private Visit(Place place, Member member, int residenceTime, int visitTypeCode, String revisitYN, int rating, int revisitIntention) {
-        this.place = place;
-        this.member = member;
-        this.residenceTime = residenceTime;
-        this.visitTypeCode = visitTypeCode;
-        this.revisitYN = revisitYN;
-        this.rating = rating;
-        this.revisitIntention = revisitIntention;
-    }
 }

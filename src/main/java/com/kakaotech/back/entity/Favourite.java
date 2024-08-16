@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class Favourite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +29,4 @@ public class Favourite {
     @CreatedDate
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;
-
-    @Builder
-    public Favourite(Place place, LocalDateTime registerAt, Member member) {
-        this.place = place;
-        this.registerAt = registerAt;
-        this.member = member;
-    }
 }

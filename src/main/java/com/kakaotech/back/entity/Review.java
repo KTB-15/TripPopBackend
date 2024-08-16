@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +37,4 @@ public class Review {
     @LastModifiedDate
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
-
-    @Builder
-    public Review(Member member, Place place, String content, LocalDateTime registerAt, LocalDateTime updatedAt) {
-        this.member = member;
-        this.place = place;
-        this.content = content;
-        this.registerAt = registerAt;
-        this.updatedAt = updatedAt;
-    }
 }

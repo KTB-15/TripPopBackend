@@ -47,4 +47,36 @@ public class Member {
     private String travelStyle8;
     @CreatedDate
     private LocalDateTime registerAt;
+
+    public void SetTravelStyle1(String travelStyle1) {
+        this.travelStyle1 = travelStyle1;
+    }
+
+    public void SetTravelStyle2(String travelStyle2) {
+        this.travelStyle2 = travelStyle2;
+    }
+
+    public void SetTravelStyle3(String travelStyle3) {
+        this.travelStyle3 = travelStyle3;
+    }
+
+    public void SetTravelStyle4(String travelStyle4) {
+        this.travelStyle4 = travelStyle4;
+    }
+
+    public void SetTravelStyle5(String travelStyle5) {
+        this.travelStyle5 = travelStyle5;
+    }
+
+    public void SetTravelStyle6(String travelStyle6) {
+        this.travelStyle6 = travelStyle6;
+    }
+
+    public void SetTravelStyle7(String travelStyle7) {
+        this.travelStyle7 = travelStyle7;
+    }
+
+    public void SetTravelStyle8(String travelStyle8) {
+        this.travelStyle8 = travelStyle8;
+    }
 }

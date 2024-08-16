@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +17,9 @@ public class Visit {
     @JoinColumn(name = "place_id")
     private Place place;
 
-    //    TODO: Merge시 원본 Member로 변경해야함
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private TempMember member;
+    private Member member;
 
     @Column(name = "residence_time")
     private int residenceTime;
@@ -31,15 +31,4 @@ public class Visit {
     private int rating;
     @Column(name = "revisit_intention")
     private int revisitIntention;
-
-    @Builder
-    private Visit(Place place, TempMember member, int residenceTime, int visitTypeCode, String revisitYN, int rating, int revisitIntention) {
-        this.place = place;
-        this.member = member;
-        this.residenceTime = residenceTime;
-        this.visitTypeCode = visitTypeCode;
-        this.revisitYN = revisitYN;
-        this.rating = rating;
-        this.revisitIntention = revisitIntention;
-    }
 }

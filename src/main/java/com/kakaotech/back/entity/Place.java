@@ -23,5 +23,4 @@ public class Place {
     private Double yCoord;
     @Column(name = "image_url")
     private String imageUrl;
-
 }

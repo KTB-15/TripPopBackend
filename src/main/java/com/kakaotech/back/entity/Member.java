@@ -19,11 +19,9 @@ public class Member {
     @Id
     private String id;
 
-    @Column(name = "member_id", unique = true)
-    @NotBlank
+    @Column(name = "member_id")
     private String memberId;
 
-    @NotBlank
     private String password;
 
     private String nickname;
@@ -71,7 +69,7 @@ public class Member {
     private LocalDateTime registerAt;
 
     @OneToOne
-    @JoinColumn(name = "sgg_id")
+    @JoinColumn(name = "id")
     private SGG sgg;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)

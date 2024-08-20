@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -17,7 +18,7 @@ import java.util.List;
 @Builder
 public class Member {
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(name = "member_id", unique = true)
     @NotBlank

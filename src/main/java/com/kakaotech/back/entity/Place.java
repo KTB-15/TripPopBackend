@@ -22,6 +22,8 @@ public class Place {
     private Double yCoord;
     @Column(name = "image_url")
     private String imageUrl;
-    @Column(name = "avg_rating")
-    private Double avgRating;
+    @Column(name = "rating_count")
+    private Integer ratingCount;
+    @Column(name = "rating_sum")
+    private Integer ratingSum;
 }

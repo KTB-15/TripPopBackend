@@ -12,7 +12,7 @@ public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "area_name")
+    @Column(name = "area_name", unique = true)
     private String areaName;
     @Column(name = "road_name")
     private String roadName;

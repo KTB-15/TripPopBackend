@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorMessage {
     // 404
-    MEMBER_ALREADY_EXISTS(HttpStatus.CONFLICT, "ALREADY EXISTS MEMBER"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "NO USER"),
     PLACE_NOT_FOUND(HttpStatus.NOT_FOUND, "NO PLACE"),
     FAVOURITE_NOT_FOUND(HttpStatus.NOT_FOUND, "NO FAVOURITE");

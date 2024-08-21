@@ -25,9 +25,6 @@ public class MemberService {
 
     @Transactional
     public Member saveMember(RegisterMemberDto registerMemberDto) {
-        if (memberRepository.existsByMemberId(registerMemberDto.getId())) {
-            throw new RuntimeException("이미 존재하는 아이디입니다.");
-        }
 
         Member member = Member.builder()
                 .memberId(registerMemberDto.getId())

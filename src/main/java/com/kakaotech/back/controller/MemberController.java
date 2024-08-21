@@ -23,6 +23,7 @@ public class MemberController {
 
     @PostMapping("/join")
     public ResponseEntity<ApiResponse<MemberResponseDto>> saveMember(@RequestBody MemberRequestDto memberRequestDto) {
-
+        MemberResponseDto memberResponseDto = memberService.saveMember(memberRequestDto);
+        return ResponseEntity.ok(ApiResponse.success(memberResponseDto));
     }
 }

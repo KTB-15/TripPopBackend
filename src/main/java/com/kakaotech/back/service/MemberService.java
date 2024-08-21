@@ -1,5 +1,7 @@
 package com.kakaotech.back.service;
 
+import com.kakaotech.back.common.exception.ErrorMessage;
+import com.kakaotech.back.common.exception.MemberException;
 import com.kakaotech.back.dto.RegisterMemberDto;
 import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
@@ -25,6 +27,9 @@ public class MemberService {
 
     @Transactional
     public Member saveMember(RegisterMemberDto registerMemberDto) {
+        if (memberRepository.existsByMemberId(registerMemberDto.getId())) {
+            throw new MemberException(ErrorMessage.MEMBER_ALREADY_EXISTS);
+        }
 
         Member member = Member.builder()
                 .memberId(registerMemberDto.getId())

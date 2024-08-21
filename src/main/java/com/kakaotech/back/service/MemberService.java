@@ -1,15 +1,21 @@
 package com.kakaotech.back.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakaotech.back.dto.RegisterMemberDto;
 import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.entity.SGG;
 import com.kakaotech.back.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -18,6 +24,21 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private Map<String, String> sidoMap;
+    private Map<String, String> sggMap;
+
+    @Bean
+    public void init() throws IOException {
+        // Load JSON data
+        ObjectMapper objectMapper = new ObjectMapper();
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("sgg.json");
+        if (inputStream == null) {
+            throw new IllegalArgumentException("sgg.json file not found in resources");
+        }
+        Map<String, Map<String, String>> jsonData = objectMapper.readValue(inputStream, Map.class);
+        this.sidoMap = jsonData.get("SIDO");
+        this.sggMap = jsonData.get("SGG");
+    }
 
     public boolean existsByMemberId(String memberId) {
         return memberRepository.existsByMemberId(memberId);
@@ -28,11 +49,8 @@ public class MemberService {
             throw new RuntimeException("이미 존재하는 아이디입니다.");
         }
 
-        // TODO
-        // ssg id값 어떻게 가져옴?
-        // age
-        // gender 수정
         SGG sgg = SGG.builder()
+                .id(sidoMap.get(registerMemberDto.getArea())+sggMap.get(registerMemberDto.getSubArea()))
                 .sidoName(registerMemberDto.getArea())
                 .sggName(registerMemberDto.getSubArea())
                 .build();

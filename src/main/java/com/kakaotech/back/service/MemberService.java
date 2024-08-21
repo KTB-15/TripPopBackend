@@ -1,6 +1,7 @@
 package com.kakaotech.back.service;
 
 import com.kakaotech.back.dto.RegisterMemberDto;
+import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.entity.SGG;
 import com.kakaotech.back.repository.MemberRepository;
@@ -39,7 +40,7 @@ public class MemberService {
         Member member = Member.builder()
                 .memberId(registerMemberDto.getId())
                 .password(passwordEncoder.encode(registerMemberDto.getPassword()))
-                .gender(registerMemberDto.getGender())
+                .gender(Gender.valueOf(registerMemberDto.getGender()))
                 .age(registerMemberDto.getAgeGroup())
                 .sgg(sgg)
                 .build();

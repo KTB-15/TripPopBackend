@@ -24,7 +24,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registerMember(@RequestBody RegisterMemberDto registerMemberDto) {
+    public ResponseEntity<?> saveMember(@RequestBody RegisterMemberDto registerMemberDto) {
         try {
             memberService.saveMember(registerMemberDto);
             return ResponseEntity.ok("회원가입이 완료되었습니다.");

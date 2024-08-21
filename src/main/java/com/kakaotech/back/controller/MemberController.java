@@ -1,13 +1,12 @@
 package com.kakaotech.back.controller;
 
+import com.kakaotech.back.common.api.ApiResponse;
 import com.kakaotech.back.dto.RegisterMemberDto;
 import com.kakaotech.back.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/member")
@@ -16,11 +15,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Boolean>> existsByMemberId(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<Boolean>> existsByMemberId(@PathVariable String id) {
         boolean exists = memberService.existsByMemberId(id);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("exists", exists);
-        return ResponseEntity.ok(response);
+        return (exists)? ResponseEntity.ok(ApiResponse.success(true)) : ResponseEntity.ok(ApiResponse.success(false));
     }
 
     @PostMapping

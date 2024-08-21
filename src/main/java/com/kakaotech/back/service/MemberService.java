@@ -41,7 +41,7 @@ public class MemberService {
                 .memberId(registerMemberDto.getId())
                 .password(passwordEncoder.encode(registerMemberDto.getPassword()))
                 .gender(Gender.valueOf(registerMemberDto.getGender()))
-                .age(registerMemberDto.getAgeGroup())
+                .age(Integer.valueOf(registerMemberDto.getAgeGroup()))
                 .sgg(sgg)
                 .build();
 

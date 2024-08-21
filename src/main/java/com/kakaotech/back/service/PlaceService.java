@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
-    public PlaceCoord getCoordinate(String placeId) {
+    public PlaceCoord getCoordinate(Long placeId) {
         if (!placeRepository.existsById(placeId)) throw new PlaceException(ErrorMessage.PLACE_NOT_FOUND);
         return placeRepository.findCoordById(placeId).get();
     }

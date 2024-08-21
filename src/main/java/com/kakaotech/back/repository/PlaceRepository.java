@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PlaceRepository extends JpaRepository<Place, String> {
-    Optional<PlaceCoord> findCoordById(String id);
+public interface PlaceRepository extends JpaRepository<Place, Long> {
+    Optional<PlaceCoord> findCoordById(Long id);
 }

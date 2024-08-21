@@ -12,5 +12,5 @@ public class RegisterFavouriteDto {
     @NotBlank
     private String memberId;
     @NotBlank
-    private String placeId;
+    private Long placeId;
 }

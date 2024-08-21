@@ -22,9 +22,11 @@ public class SGG {
     private String id;
 
     @Column(name = "sido_code")
+    @Size(max = 10)
     private String sidoCode;
 
     @Column(name = "sgg_code")
+    @Size(max = 10)
     private String sggCode;
 
     @Column(name = "sido_name")

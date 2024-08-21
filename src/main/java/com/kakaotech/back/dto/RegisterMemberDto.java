@@ -10,7 +10,5 @@ public class RegisterMemberDto {
     private String password;
     private String gender;
     private String ageGroup;
-    private String area;
-    private String subArea;
 }
 

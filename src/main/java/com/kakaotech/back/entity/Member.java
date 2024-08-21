@@ -20,8 +20,10 @@ public class Member {
     private String id;
 
     @Column(name = "member_id", unique = true)
+    @NotBlank
     private String memberId;
 
+    @NotBlank
     private String password;
 
     private String nickname;

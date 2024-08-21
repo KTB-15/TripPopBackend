@@ -1,4 +1,4 @@
-package com.kakaotech.back.dto;
+package com.kakaotech.back.dto.member;
 
 import lombok.*;
 

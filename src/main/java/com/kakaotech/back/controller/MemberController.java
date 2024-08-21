@@ -1,8 +1,8 @@
 package com.kakaotech.back.controller;
 
 import com.kakaotech.back.common.api.ApiResponse;
-import com.kakaotech.back.dto.MemberRequestDto;
-import com.kakaotech.back.dto.MemberResponseDto;
+import com.kakaotech.back.dto.member.MemberRequestDto;
+import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -36,7 +36,7 @@ public class FavouriteControllerTest {
     @DisplayName("즐겨찾기 등록 성공")
     void testRegisterFavouriteSuccess() throws Exception {
         // Arrange
-        RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId("MEMBER_ID").placeId("PLACE_ID").build();
+        RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId("MEMBER_ID").placeId(1L).build();
         when(favouriteService.registerFavourite(dto)).thenReturn(true);
 
         // Act + Assert
@@ -51,7 +51,7 @@ public class FavouriteControllerTest {
     @DisplayName("즐겨찾기 등록 실패 - 404")
     void testRegisterFavouriteFailNotFound() throws Exception {
         // Arrange
-        RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId("MEMBER_ID").placeId("PLACE_ID").build();
+        RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId("MEMBER_ID").placeId(1L).build();
         when(favouriteService.registerFavourite(any())).thenThrow(new MemberException(ErrorMessage.USER_NOT_FOUND));
 
         // Act + Assert

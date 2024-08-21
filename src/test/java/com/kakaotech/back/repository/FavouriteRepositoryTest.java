@@ -25,7 +25,6 @@ public class FavouriteRepositoryTest {
     @BeforeEach
     void setup() {
         place1 = Place.builder()
-                .id("ID")
                 .areaName("KOREA")
                 .roadName("KOREA")
                 .xCoord(126.0)

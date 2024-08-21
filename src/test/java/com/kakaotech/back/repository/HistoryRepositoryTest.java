@@ -25,7 +25,7 @@ public class HistoryRepositoryTest {
     @BeforeEach
     public void setUp() {
         place = Place.builder()
-                .id("Sample Place")
+                .id(1L)
                 .areaName("Sample Area")
                 .roadName("Sample Road")
                 .xCoord(123.45)

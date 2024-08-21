@@ -6,17 +6,16 @@ import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.entity.SGG;
 import com.kakaotech.back.repository.MemberRepository;
+import com.kakaotech.back.repository.SGGRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +23,7 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SGGRepository sggRepository;
     private Map<String, String> sidoMap;
     private Map<String, String> sggMap;
 
@@ -54,6 +54,7 @@ public class MemberService {
                 .sidoName(registerMemberDto.getArea())
                 .sggName(registerMemberDto.getSubArea())
                 .build();
+        sgg = sggRepository.save(sgg);
 
         Member member = Member.builder()
                 .memberId(registerMemberDto.getId())
@@ -65,4 +66,5 @@ public class MemberService {
 
         return memberRepository.save(member);
     }
+
 }

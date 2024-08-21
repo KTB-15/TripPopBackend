@@ -2,6 +2,7 @@ package com.kakaotech.back.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,10 +19,11 @@ import java.util.UUID;
 @Builder
 public class Member {
     @Id
-    private String id = UUID.randomUUID().toString();
+    @Column(name = "id", unique = true, nullable = false)
+    private String id;
 
     @Column(name = "member_id", unique = true)
-    @NotBlank
+    @NotBlank()
     private String memberId;
 
     @NotBlank
@@ -29,12 +31,11 @@ public class Member {
 
     private String nickname;
 
-    @NotBlank
+    @NotNull()
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
     private Gender gender;
 
-    @NotBlank
+    @NotNull()
     private Integer age;
 
     @Column(name = "travel_like_sido")
@@ -86,4 +87,11 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<History> histories;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 }

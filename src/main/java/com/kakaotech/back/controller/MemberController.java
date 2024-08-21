@@ -29,6 +29,8 @@ public class MemberController {
             memberService.saveMember(registerMemberDto);
             return ResponseEntity.ok("회원가입이 완료되었습니다.");
         } catch (RuntimeException e) {
+            System.err.println("Error in saveMember: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

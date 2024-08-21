@@ -2,7 +2,8 @@ package com.kakaotech.back.service;
 
 import com.kakaotech.back.common.exception.ErrorMessage;
 import com.kakaotech.back.common.exception.MemberException;
-import com.kakaotech.back.dto.RegisterMemberDto;
+import com.kakaotech.back.dto.MemberResponseDto;
+import com.kakaotech.back.dto.MemberRequestDto;
 import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.MemberRepository;
@@ -26,16 +27,16 @@ public class MemberService {
     }
 
     @Transactional
-    public Member saveMember(RegisterMemberDto registerMemberDto) {
-        if (memberRepository.existsByMemberId(registerMemberDto.getId())) {
+    public Member saveMember(MemberRequestDto memberRequestDto) {
+        if (memberRepository.existsByMemberId(memberRequestDto.getId())) {
             throw new MemberException(ErrorMessage.MEMBER_ALREADY_EXISTS);
         }
 
         Member member = Member.builder()
-                .memberId(registerMemberDto.getId())
-                .password(passwordEncoder.encode(registerMemberDto.getPassword()))
-                .gender(Gender.valueOf(registerMemberDto.getGender()))
-                .age(Integer.valueOf(registerMemberDto.getAgeGroup()))
+                .memberId(memberRequestDto.getId())
+                .password(passwordEncoder.encode(memberRequestDto.getPassword()))
+                .gender(Gender.valueOf(memberRequestDto.getGender()))
+                .age(Integer.valueOf(memberRequestDto.getAgeGroup()))
                 .build();
 
         return memberRepository.save(member);

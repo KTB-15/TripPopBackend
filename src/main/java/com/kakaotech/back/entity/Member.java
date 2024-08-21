@@ -23,7 +23,7 @@ public class Member {
     private String id;
 
     @Column(name = "member_id", unique = true)
-    @NotBlank()
+    @NotBlank(message = "Member ID cannot be blank")
     private String memberId;
 
     @NotBlank
@@ -31,11 +31,11 @@ public class Member {
 
     private String nickname;
 
-    @NotNull()
+    @NotNull(message = "Gender cannot be null")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @NotNull()
+    @NotNull(message = "Age cannot be null")
     private Integer age;
 
     @Column(name = "travel_like_sido")

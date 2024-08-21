@@ -47,7 +47,6 @@ public class MemberRepositoryTest {
                 .gender(Gender.MALE)
                 .age(30)
                 .histories(List.of(history))
-                .sgg(sgg)
                 .build();
     }
 

@@ -18,6 +18,7 @@ public class SGG {
     @Id
     @Size(max = 50)
     @NotNull
+    // SGG_CD1 + SGG_CD2(SIDO_CODE + SGG_CODE)
     private String id;
 
     @Column(name = "sido_code")

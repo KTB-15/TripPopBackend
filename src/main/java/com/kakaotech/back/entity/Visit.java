@@ -13,7 +13,7 @@ public class Visit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     private Place place;
 
@@ -26,7 +26,7 @@ public class Visit {
     @Column(name = "visit_type_code")
     private int visitTypeCode;
     @Column(name = "revisit_yn")
-    private String revisitYN;
+    private Boolean revisitYN;
     @Column(name = "rating")
     private int rating;
     @Column(name = "revisit_intention")

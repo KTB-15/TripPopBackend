@@ -1,8 +1,6 @@
 package com.kakaotech.back.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -12,8 +10,9 @@ import lombok.*;
 @Builder
 public class Place {
     @Id
-    private String id; // 아직까지 생성될 일이 없어서 GeneratedValue 미적용
-    @Column(name = "area_name")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "area_name", unique = true)
     private String areaName;
     @Column(name = "road_name")
     private String roadName;
@@ -23,5 +22,8 @@ public class Place {
     private Double yCoord;
     @Column(name = "image_url")
     private String imageUrl;
-
+    @Column(name = "rating_count")
+    private Integer ratingCount;
+    @Column(name = "rating_sum")
+    private Integer ratingSum;
 }

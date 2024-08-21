@@ -36,11 +36,9 @@ public class Member {
     @NotBlank
     private Integer age;
 
-    @Column(name = "travel_like_sido")
-    private String travelLikeSIDO;
-
-    @Column(name = "travel_like_sgg")
-    private String travelLikeSGG;
+    @ManyToOne
+    @JoinColumn(name = "travel_like_sgg")
+    private SGG travelLikeSGG;
 
     @Column(name = "travel_style_1")
     private String travelStyle1;
@@ -69,10 +67,6 @@ public class Member {
     @CreatedDate
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;
-
-    @OneToOne
-    @JoinColumn(name = "sgg_id")
-    private SGG sgg;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Visit> visits;

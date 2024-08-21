@@ -1,7 +1,7 @@
 package com.kakaotech.back.entity.segment;
 
 public interface PlaceCoord {
-    String getId();
+    Long getId();
 
     Double getxCoord();
 

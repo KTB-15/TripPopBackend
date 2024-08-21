@@ -72,9 +72,9 @@ public class Member {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime registerAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "sgg_id")
-    private SGG sgg;
+    private SGG travel_like_sgg;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Visit> visits;

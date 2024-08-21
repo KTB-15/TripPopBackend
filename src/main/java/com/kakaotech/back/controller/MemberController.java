@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/exists/{id}")
     public ResponseEntity<ApiResponse<Boolean>> existsByMemberId(@PathVariable String id) {
         boolean exists = memberService.existsByMemberId(id);
         return (exists)? ResponseEntity.ok(ApiResponse.success(true)) : ResponseEntity.ok(ApiResponse.success(false));
     }
 
-    @PostMapping
+    @PostMapping("/join")
     public ResponseEntity<?> saveMember(@RequestBody RegisterMemberDto registerMemberDto) {
         try {
             memberService.saveMember(registerMemberDto);

@@ -21,6 +21,12 @@ public class SGG {
     // SGG_CD1 + SGG_CD2(SIDO_CODE + SGG_CODE)
     private String id;
 
+    @Column(name = "sido_code")
+    private String sidoCode;
+
+    @Column(name = "sgg_code")
+    private String sggCode;
+
     @Column(name = "sido_name")
     @Size(max = 100)
     @NotNull

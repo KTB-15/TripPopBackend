@@ -17,7 +17,7 @@ public class SecurityConfig {
         http
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/member/**").permitAll() // /member 경로에 대한 접근 허용
+                .requestMatchers("/member/exists/**", "/member/join").permitAll() // member join, exists 시 경로에 대한 접근 허용
                 .anyRequest().authenticated() // 그 외의 요청은 인증 필요
                 );
 

@@ -1,12 +1,11 @@
 package com.kakaotech.back.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,4 +36,7 @@ public class SGG {
     @Column(name = "sgg_name")
     @Size(max = 100)
     private String sggName;
+
+    @OneToMany(mappedBy = "travelLikeSGG")
+    private List<Member> members;
 }

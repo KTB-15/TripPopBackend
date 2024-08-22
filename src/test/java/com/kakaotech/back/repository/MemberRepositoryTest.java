@@ -30,10 +30,6 @@ public class MemberRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        SGG sgg = new SGG("sgg1", "sidoCode1", "sggCode1", "sidoName1", "sggName1");
-        sggRepository.save(sgg);  // SGG 엔터티를 먼저 저장
-
-
         history = History.builder()
                 .content("Sample content")
                 .build();

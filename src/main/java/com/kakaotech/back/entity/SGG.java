@@ -37,6 +37,6 @@ public class SGG {
     @Size(max = 100)
     private String sggName;
 
-    @OneToMany(mappedBy = "travel_like_sgg")
+    @OneToMany(mappedBy = "travelLikeSGG")
     private List<Member> members;
 }

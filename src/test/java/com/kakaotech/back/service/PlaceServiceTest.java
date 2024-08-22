@@ -46,6 +46,7 @@ class PlaceServiceTest {
         when(requestBodySpec.body(any(Map.class))).thenReturn(requestBodySpec);
         when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
+        // TODO:
         String expectedResponse = "{TODO}";
         when(responseSpec.body(eq(String.class))).thenReturn(expectedResponse);
     }
@@ -60,7 +61,7 @@ class PlaceServiceTest {
         when(placeRepository.findCoordById(1L)).thenReturn(Optional.of(coord));
 
         // Act
-        String response = placeService.getNearbyPlace(coord);
+        String response = placeService.getNearbyPlace(1L);
 
         // Assert
         assertNotNull(response);

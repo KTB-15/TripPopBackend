@@ -23,15 +23,10 @@ public class PlaceService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String NEARBY_SEARCH_URL = "https://places.googleapis.com/v1/places:searchNearby"; // Google Places API URL
 
-    // 좌표만 조회
-    PlaceCoordVO getCoordinate(Long placeId) {
-        return placeRepository
-                .findCoordById(placeId)
-                .orElseThrow(() -> new PlaceException(ErrorMessage.PLACE_NOT_FOUND));
-    }
-
     // 좌표를 통해 구글 Place 주변 장소 검색
-    String getNearbyPlace(PlaceCoordVO coord) {
+    public String getNearbyPlace(Long placeId) {
+        // 존재하는 ID인지 확인
+        PlaceCoordVO coord = getCoordinate(placeId);
         var body = getBody(coord);
 
         try {
@@ -48,6 +43,14 @@ public class PlaceService {
         }
     }
 
+    // 좌표만 조회
+    private PlaceCoordVO getCoordinate(Long placeId) {
+        return placeRepository
+                .findCoordById(placeId)
+                .orElseThrow(() -> new PlaceException(ErrorMessage.PLACE_NOT_FOUND));
+    }
+
+    // Google Places nearby api 요청 데이터
     private static Map<String, Object> getBody(PlaceCoordVO coord) {
         Double latitude = coord.getxCoord();
         Double longitude = coord.getyCoord();

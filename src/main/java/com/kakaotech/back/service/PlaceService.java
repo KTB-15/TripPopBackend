@@ -52,8 +52,8 @@ public class PlaceService {
 
     // Google Places nearby api 요청 데이터
     private static Map<String, Object> getBody(PlaceCoordVO coord) {
-        Double latitude = coord.getxCoord();
-        Double longitude = coord.getyCoord();
+        Double longitude = coord.getxCoord();
+        Double latitude = coord.getyCoord();
         return Map.of(
                 "maxResultCount", 3,
                 "rankPreference", "DISTANCE",

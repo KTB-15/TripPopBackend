@@ -47,7 +47,7 @@ public class FavouriteServiceTest {
                 .id("MEMBERID")
                 .build();
         place = Place.builder()
-                .id("PLACEID")
+                .id(1L)
                 .build();
         favourite = Favourite.builder()
                 .member(member)

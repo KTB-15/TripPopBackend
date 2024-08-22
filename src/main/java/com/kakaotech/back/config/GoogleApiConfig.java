@@ -9,11 +9,12 @@ import org.springframework.web.client.RestClient;
 public class GoogleApiConfig {
 
     @Value("${google.maps.api-key}")
-    String apiKey;
+    private String apiKey;
 
     @Bean
     RestClient restClient() {
         return RestClient.builder()
+                .defaultHeader("Content-Type", "application/json")
                 .defaultHeader("X-Goog-Api-Key", apiKey)
                 .defaultHeader("X-Goog-FieldMask", "places.name")
                 .build();

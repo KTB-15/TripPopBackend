@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 public class MemberResponseDto {
     private String id;
-    private String member_id;
+    private String memberId;
     private String gender;
     private Integer ageGroup;
 }

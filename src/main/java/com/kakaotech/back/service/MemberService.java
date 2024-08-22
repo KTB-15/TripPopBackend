@@ -26,12 +26,13 @@ public class MemberService {
 
     @Transactional
     public MemberResponseDto saveMember(MemberRequestDto memberRequestDto) {
-        if (memberRepository.existsByMemberId(memberRequestDto.getMember_id())) {
+        if (memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
             throw new MemberException(ErrorMessage.MEMBER_ALREADY_EXISTS);
         }
-
+        System.out.println("memberRequestDto.memberId = " + memberRequestDto.getMemberId());
+        System.out.println("memberRequestDto.password = " + memberRequestDto.getPassword());
         Member member = Member.builder()
-                .memberId(memberRequestDto.getMember_id())
+                .memberId(memberRequestDto.getMemberId())
                 .password(passwordEncoder.encode(memberRequestDto.getPassword()))
                 .gender(Gender.valueOf(memberRequestDto.getGender()))
                 .age(Integer.valueOf(memberRequestDto.getAgeGroup()))
@@ -41,7 +42,7 @@ public class MemberService {
 
         MemberResponseDto responseDto = MemberResponseDto.builder()
                 .id(savedMember.getMemberId())
-                .member_id(savedMember.getMemberId())
+                .memberId(savedMember.getMemberId())
                 .gender(savedMember.getGender().toString())
                 .ageGroup(savedMember.getAge())
                 .build();

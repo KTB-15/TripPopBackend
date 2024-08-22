@@ -7,7 +7,6 @@ import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.MemberRepository;
-import com.kakaotech.back.repository.SGGRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final SGGRepository sggRepository;
 
     public boolean existsByMemberId(String memberId) {
         return memberRepository.existsByMemberId(memberId);

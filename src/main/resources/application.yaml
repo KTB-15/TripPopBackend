@@ -3,7 +3,9 @@ spring:
     name: TripPop
   profiles:
     active: "local"
-
+google:
+  maps:
+    api-key: ${GOOGLE_API_KEY}
 ---
 # local
 server:

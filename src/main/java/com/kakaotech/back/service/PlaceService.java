@@ -27,7 +27,7 @@ public class PlaceService {
     public String getNearbyPlace(Long placeId) {
         // 존재하는 ID인지 확인
         PlaceCoordVO coord = getCoordinate(placeId);
-        var body = getBody(coord);
+        var body = getNearbyReqBody(coord);
 
         try {
             return restClient.post()
@@ -51,19 +51,19 @@ public class PlaceService {
     }
 
     // Google Places nearby api 요청 데이터
-    private static Map<String, Object> getBody(PlaceCoordVO coord) {
+    private static Map<String, Object> getNearbyReqBody(PlaceCoordVO coord) {
         Double longitude = coord.getxCoord();
         Double latitude = coord.getyCoord();
         return Map.of(
-                "maxResultCount", 3,
-                "rankPreference", "DISTANCE",
+                "maxResultCount", 3, // 최대 3개를
+                "rankPreference", "DISTANCE", // 가까운 거리순으로
                 "locationRestriction", Map.of(
                         "circle", Map.of(
                                 "center", Map.of(
                                         "latitude", latitude,
                                         "longitude", longitude
                                 ),
-                                "radius", 100
+                                "radius", 100 // 반경 100m
                         )
                 )
         );

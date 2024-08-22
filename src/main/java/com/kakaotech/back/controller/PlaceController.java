@@ -1,12 +1,10 @@
 package com.kakaotech.back.controller;
 
+import com.kakaotech.back.dto.place.PlaceReqDto;
 import com.kakaotech.back.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +17,8 @@ public class PlaceController {
 //        return ResponseEntity.ok(ApiResponse.success(placeService.getCoordinate(placeId)));
 //    }
 
-    @PostMapping("/{placeId}")
-    public ResponseEntity<String> getPlaceInfo(@PathVariable Long placeId) {
-        return ResponseEntity.ok(placeService.getNearbyPlace(placeId));
+    @PostMapping("")
+    public ResponseEntity<String> getPlaceInfo(@RequestBody PlaceReqDto dto) {
+        return ResponseEntity.ok(placeService.getNearbyPlace(dto.placeId()));
     }
 }

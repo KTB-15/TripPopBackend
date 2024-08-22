@@ -1,7 +1,7 @@
 package com.kakaotech.back.repository;
 
 import com.kakaotech.back.entity.Place;
-import com.kakaotech.back.entity.projection.PlaceCoordVO;
+import com.kakaotech.back.vo.PlaceCoordVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -2,7 +2,7 @@ package com.kakaotech.back.service;
 
 import com.kakaotech.back.common.exception.ErrorMessage;
 import com.kakaotech.back.common.exception.PlaceException;
-import com.kakaotech.back.entity.projection.PlaceCoordVO;
+import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.kakaotech.back.service;
 
-import com.kakaotech.back.entity.projection.PlaceCoordVO;
+import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,9 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClient.*;
 
@@ -35,18 +32,18 @@ class PlaceServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this); // mock 생성을 위한 초기화
         // RestClient 관련 mock
-        RequestBodyUriSpec requestBodyUriSpec = mock(RequestBodyUriSpec.class);
+        RequestBodyUriSpec requestBodyUriSpec = mock(RequestBodyUriSpec.class); // HTTP 메서드 지정 인터페이스
         RequestBodySpec requestBodySpec = mock(RequestBodySpec.class);
-        ResponseSpec responseSpec = mock(ResponseSpec.class);
+        ResponseSpec responseSpec = mock(ResponseSpec.class); // 요청 실행 및 응답 준비. body로 타입 매핑, onStatus로 예외 처리.
 
         when(restClient.post()).thenReturn(requestBodyUriSpec);
         when(requestBodyUriSpec.uri(anyString())).thenReturn(requestBodySpec);
         when(requestBodySpec.body(any(Map.class))).thenReturn(requestBodySpec);
         when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
-        // TODO:
+        // TODO: 객체 정의시 변경
         String expectedResponse = "{TODO}";
         when(responseSpec.body(eq(String.class))).thenReturn(expectedResponse);
     }

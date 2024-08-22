@@ -3,7 +3,7 @@ package com.kakaotech.back.repository;
 import com.kakaotech.back.common.exception.ErrorMessage;
 import com.kakaotech.back.common.exception.PlaceException;
 import com.kakaotech.back.entity.Place;
-import com.kakaotech.back.entity.projection.PlaceCoordVO;
+import com.kakaotech.back.vo.PlaceCoordVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

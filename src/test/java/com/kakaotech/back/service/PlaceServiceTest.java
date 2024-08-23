@@ -32,11 +32,15 @@ class PlaceServiceTest {
     @Mock
     private RestClient restClient;
 
-    private GooglePlaceIdVO expected;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this); // mock 생성을 위한 초기화
+    }
+
+    @Test
+    @DisplayName("Google Places API에 좌표를 통해 Place 정보 얻기")
+    void testGetNearbyPlace() {
+        // Arrange
         // RestClient 관련 mock
         RequestBodyUriSpec requestBodyUriSpec = mock(RequestBodyUriSpec.class); // HTTP 메서드 지정 인터페이스
         RequestBodySpec requestBodySpec = mock(RequestBodySpec.class);
@@ -44,17 +48,13 @@ class PlaceServiceTest {
 
         when(restClient.post()).thenReturn(requestBodyUriSpec);
         when(requestBodyUriSpec.uri(anyString())).thenReturn(requestBodySpec);
+        when(requestBodySpec.header(anyString(), anyString())).thenReturn(requestBodySpec);
         when(requestBodySpec.body(any(Map.class))).thenReturn(requestBodySpec);
         when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
-        expected = GooglePlaceIdVO.builder().places(List.of(new GooglePlaceIdVO.Place("place"))).build();
+        GooglePlaceIdVO expected = GooglePlaceIdVO.builder().places(List.of(new GooglePlaceIdVO.Place("place"))).build();
         when(responseSpec.body(eq(GooglePlaceIdVO.class))).thenReturn(expected);
-    }
 
-    @Test
-    @DisplayName("Google Places API에 좌표를 통해 Place 정보 얻기")
-    void testGetNearbyPlace() {
-        // Arrange
         PlaceCoordVO coord = mock(PlaceCoordVO.class);
         when(coord.getxCoord()).thenReturn(126.9238966);
         when(coord.getyCoord()).thenReturn(33.45231691);
@@ -67,4 +67,5 @@ class PlaceServiceTest {
         assertNotNull(result);
         assertEquals(result.places(), expected.places());
     }
+
 }

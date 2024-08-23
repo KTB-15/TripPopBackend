@@ -1,7 +1,5 @@
 package com.kakaotech.back.repository;
 
-import com.kakaotech.back.common.exception.ErrorMessage;
-import com.kakaotech.back.common.exception.PlaceException;
 import com.kakaotech.back.entity.Place;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,11 +42,10 @@ class PlaceRepositoryTest {
     void testPlaceProjection() {
         // When
         assertNotNull(placeId);
-        PlaceCoordVO vo = placeRepository.findCoordById(placeId).orElseThrow(
-                () -> new PlaceException(ErrorMessage.PLACE_NOT_FOUND)
-        );
+        PlaceCoordVO vo = placeRepository.findCoordById(placeId).orElse(null);
 
         // Then
+        assertNotNull(vo);
         assertEquals(xCoord, vo.getxCoord());
         assertEquals(yCoord, vo.getyCoord());
     }

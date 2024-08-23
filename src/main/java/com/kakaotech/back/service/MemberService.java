@@ -28,7 +28,7 @@ public class MemberService {
         if (memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
             throw new AlreadyExistsException(memberRequestDto.getMemberId()+"는 이미 존재하는 ID 입니다.");
         }
-        
+
         Member member = Member.builder()
                 .memberId(memberRequestDto.getMemberId())
                 .password(passwordEncoder.encode(memberRequestDto.getPassword()))

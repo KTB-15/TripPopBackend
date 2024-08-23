@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 
 @RestController
 @RequestMapping("/member")
@@ -23,6 +25,7 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<MemberResponseDto> saveMember(@RequestBody MemberRequestDto memberRequestDto) {
         MemberResponseDto memberResponseDto = memberService.saveMember(memberRequestDto);
-        return ResponseEntity.ok(memberResponseDto);
+        URI location = URI.create("/members/" + memberResponseDto.getId());
+        return ResponseEntity.created(location).body(memberResponseDto);
     }
 }

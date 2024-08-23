@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/place")
@@ -21,5 +23,10 @@ public class PlaceController {
     @PostMapping("")
     public ResponseEntity<GooglePlaceIdVO> getPlaceInfo(@RequestBody PlaceReqDto dto) {
         return ResponseEntity.ok(placeService.getNearbyPlace(dto.placeId()));
+    }
+
+    @PostMapping("/reference")
+    public ResponseEntity<Map<String, Object>> getPlaceReference(@RequestBody PlaceReqDto dto) {
+        return ResponseEntity.ok(placeService.getPlaceReference(dto.placeId()));
     }
 }

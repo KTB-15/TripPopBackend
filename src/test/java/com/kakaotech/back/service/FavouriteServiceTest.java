@@ -1,5 +1,6 @@
 package com.kakaotech.back.service;
 
+import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
@@ -83,7 +84,7 @@ public class FavouriteServiceTest {
         when(memberRepository.findById(dto.getMemberId())).thenReturn(Optional.empty());
 
         // Act + Assert
-        assertThrows(MemberException.class, () -> favouriteService.registerFavourite(dto));
+        assertThrows(NotFoundException.class, () -> favouriteService.registerFavourite(dto));
 
         verify(memberRepository, times(1)).findById(dto.getMemberId());
         verify(placeRepository, never()).findById(any());

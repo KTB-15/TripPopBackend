@@ -1,6 +1,7 @@
 package com.kakaotech.back.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.service.FavouriteService;
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +49,7 @@ public class FavouriteControllerTest {
     void testRegisterFavouriteFailNotFound() throws Exception {
         // Arrange
         RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId("MEMBER_ID").placeId(1L).build();
-        when(favouriteService.registerFavourite(any())).thenThrow(new MemberException(ErrorMessage.USER_NOT_FOUND));
+        when(favouriteService.registerFavourite(any())).thenThrow(new NotFoundException("존재하지 않은 member 입니다."));
 
         // Act + Assert
         mockMvc.perform(post("/favourite")
@@ -75,7 +76,7 @@ public class FavouriteControllerTest {
     void testDeleteFavouriteFailNotFound() throws Exception {
         // Arrange
         Long favouriteId = -1L;
-        doThrow(new FavouriteException(ErrorMessage.FAVOURITE_NOT_FOUND)).when(favouriteService).deleteFavourite(favouriteId);
+        doThrow(new NotFoundException(favouriteId+"로 생성된 favourite는 존재하지 않습니다.")).when(favouriteService).deleteFavourite(favouriteId);
 
         // Act + Assert
         mockMvc.perform(delete("/favourite/{favouriteId}", favouriteId))

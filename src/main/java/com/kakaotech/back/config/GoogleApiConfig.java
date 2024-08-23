@@ -16,7 +16,6 @@ public class GoogleApiConfig {
         return RestClient.builder()
                 .defaultHeader("Content-Type", "application/json")
                 .defaultHeader("X-Goog-Api-Key", apiKey)
-                .defaultHeader("X-Goog-FieldMask", "places.name")
                 .build();
     }
 }

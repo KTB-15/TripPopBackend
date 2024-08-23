@@ -1,7 +1,5 @@
 package com.kakaotech.back.service;
 
-import com.kakaotech.back.common.exception.ErrorMessage;
-import com.kakaotech.back.common.exception.MemberException;
 import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.entity.Gender;

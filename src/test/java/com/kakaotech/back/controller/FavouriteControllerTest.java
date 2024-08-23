@@ -1,10 +1,6 @@
 package com.kakaotech.back.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kakaotech.back.common.exception.ErrorMessage;
-import com.kakaotech.back.common.exception.FavouriteException;
-import com.kakaotech.back.common.exception.MemberException;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.service.FavouriteService;
 import org.junit.jupiter.api.DisplayName;

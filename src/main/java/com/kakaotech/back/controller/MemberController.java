@@ -24,7 +24,7 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<MemberResponseDto> saveMember(@RequestBody MemberRequestDto memberRequestDto) {
         MemberResponseDto memberResponseDto = memberService.saveMember(memberRequestDto);
-        URI location = URI.create("/members/" + memberResponseDto.getId());
+        URI location = URI.create("/member/" + memberResponseDto.getId());
         return ResponseEntity.created(location).body(memberResponseDto);
     }
 }

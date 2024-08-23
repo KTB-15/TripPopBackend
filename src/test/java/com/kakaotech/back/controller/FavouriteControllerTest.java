@@ -41,7 +41,7 @@ public class FavouriteControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").value(true));
+                .andExpect(jsonPath("$").value(true));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class FavouriteControllerTest {
         // Act + Assert
         mockMvc.perform(delete("/favourite/{favouriteId}", favouriteId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").value(favouriteId));
+                .andExpect(jsonPath("$").value(favouriteId));
     }
 
     @Test

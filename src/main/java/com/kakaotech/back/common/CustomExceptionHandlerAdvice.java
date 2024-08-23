@@ -12,4 +12,9 @@ public class CustomExceptionHandlerAdvice {
     ProblemDetail handleNotFoundException(NotFoundException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
     }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    ProblemDetail handleAlreadyExistsException(AlreadyExistsException e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
+    }
 }

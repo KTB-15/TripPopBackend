@@ -1,6 +1,9 @@
 spring:
   application:
     name: TripPop
+  mvc:
+    problemdetails:
+      enabled: true
   profiles:
     active: "local"
 google:

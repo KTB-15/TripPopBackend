@@ -1,9 +1,7 @@
 package com.kakaotech.back.service;
 
-import com.kakaotech.back.common.exception.ErrorMessage;
-import com.kakaotech.back.common.exception.PlaceException;
-import com.kakaotech.back.vo.GooglePlaceIdVO;
-import com.kakaotech.back.vo.PlaceCoordVO;
+import com.kakaotech.back.common.exception.NotFoundException;
+import com.kakaotech.back.entity.projection.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +24,9 @@ public class PlaceService {
     private final String NEARBY_SEARCH_URL = "https://places.googleapis.com/v1/places:searchNearby"; // 좌표의 Place Id 조회
     private final String PLACE_REFERENCE_URL = "https://places.googleapis.com/v1/places"; // Place Id에 대한 정보 조회
 
+    public PlaceCoordVO getCoordinate(Long placeId) {
+        if (!placeRepository.existsById(placeId)) throw new NotFoundException(placeId+"로 생성된 place는 존재하지 않습니다.");
+        return placeRepository.findCoordById(placeId).get();
     // 좌표를 통해 구글 Place 주변 장소 검색
     public GooglePlaceIdVO getNearbyPlace(Long placeId) {
         // 존재하는 id인지 확인

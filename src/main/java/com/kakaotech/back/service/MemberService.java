@@ -1,7 +1,6 @@
 package com.kakaotech.back.service;
 
-import com.kakaotech.back.common.exception.ErrorMessage;
-import com.kakaotech.back.common.exception.MemberException;
+import com.kakaotech.back.common.exception.AlreadyExistsException;
 import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.entity.Gender;
@@ -27,10 +26,9 @@ public class MemberService {
     @Transactional
     public MemberResponseDto saveMember(MemberRequestDto memberRequestDto) {
         if (memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
-            throw new MemberException(ErrorMessage.MEMBER_ALREADY_EXISTS);
+            throw new AlreadyExistsException(memberRequestDto.getMemberId()+"는 이미 존재하는 ID 입니다.");
         }
-        System.out.println("memberRequestDto.memberId = " + memberRequestDto.getMemberId());
-        System.out.println("memberRequestDto.password = " + memberRequestDto.getPassword());
+
         Member member = Member.builder()
                 .memberId(memberRequestDto.getMemberId())
                 .password(passwordEncoder.encode(memberRequestDto.getPassword()))

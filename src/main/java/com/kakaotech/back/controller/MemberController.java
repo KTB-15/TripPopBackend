@@ -1,12 +1,13 @@
 package com.kakaotech.back.controller;
 
-import com.kakaotech.back.common.api.ApiResponse;
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 
 @RestController
@@ -16,14 +17,14 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/exists/{id}")
-    public ResponseEntity<ApiResponse<Boolean>> existsByMemberId(@PathVariable String id) {
-        boolean exists = memberService.existsByMemberId(id);
-        return (exists)? ResponseEntity.ok(ApiResponse.success(true)) : ResponseEntity.ok(ApiResponse.success(false));
+    public ResponseEntity<Boolean> existsByMemberId(@PathVariable String id) {
+        return ResponseEntity.ok(memberService.existsByMemberId(id));
     }
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse<MemberResponseDto>> saveMember(@RequestBody MemberRequestDto memberRequestDto) {
+    public ResponseEntity<MemberResponseDto> saveMember(@RequestBody MemberRequestDto memberRequestDto) {
         MemberResponseDto memberResponseDto = memberService.saveMember(memberRequestDto);
-        return ResponseEntity.ok(ApiResponse.success(memberResponseDto));
+        URI location = URI.create("/member/" + memberResponseDto.getId());
+        return ResponseEntity.created(location).body(memberResponseDto);
     }
 }

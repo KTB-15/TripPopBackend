@@ -1,9 +1,6 @@
 package com.kakaotech.back.service;
 
-import com.kakaotech.back.common.exception.ErrorMessage;
-import com.kakaotech.back.common.exception.FavouriteException;
-import com.kakaotech.back.common.exception.MemberException;
-import com.kakaotech.back.common.exception.PlaceException;
+import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
 import com.kakaotech.back.entity.Favourite;
 import com.kakaotech.back.entity.Place;
@@ -29,7 +26,7 @@ public class FavouriteService {
     @Transactional(readOnly = true)
     public List<Favourite> getFavourites(String memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
-        if(member.isEmpty()) throw new MemberException(ErrorMessage.USER_NOT_FOUND);
+        if(member.isEmpty()) throw new NotFoundException(memberId+"로 생성된 member는 존재하지 않습니다.");
 
         return favouriteRepository.findByMember(member.get()).get();
     }
@@ -39,12 +36,12 @@ public class FavouriteService {
         Optional<Member> member = memberRepository.findById(dto.getMemberId());
         // Member 찾기
         if (member.isEmpty()) {
-            throw new MemberException(ErrorMessage.USER_NOT_FOUND);
+            throw new NotFoundException(dto.getMemberId()+"로 생성된 member는 존재하지 않습니다.");
         }
         Optional<Place> place = placeRepository.findById(dto.getPlaceId());
         // Place 찾기
         if (place.isEmpty()) {
-            throw new PlaceException(ErrorMessage.PLACE_NOT_FOUND);
+            throw new NotFoundException(dto.getPlaceId()+"로 생성된 place는 존재하지 않습니다.");
         }
         favouriteRepository.save(
                 Favourite
@@ -59,7 +56,7 @@ public class FavouriteService {
     @Transactional
     public Long deleteFavourite(Long favouriteId) {
         if (!favouriteRepository.existsById(favouriteId)) {
-            throw new FavouriteException(ErrorMessage.FAVOURITE_NOT_FOUND);
+            throw new NotFoundException(favouriteId+"로 생성된 favourite는 존재하지 않습니다.");
         }
         favouriteRepository.deleteById(favouriteId);
         return favouriteId;

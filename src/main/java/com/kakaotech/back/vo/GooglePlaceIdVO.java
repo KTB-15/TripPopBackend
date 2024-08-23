@@ -1,5 +1,7 @@
 package com.kakaotech.back.vo;
 
+import lombok.Builder;
+
 import java.util.List;
 
 /*
@@ -13,6 +15,7 @@ import java.util.List;
   ]
 }
 * */
+@Builder
 public record GooglePlaceIdVO(List<Place> places) {
     public static record Place(String name) {
     }

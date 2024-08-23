@@ -2,6 +2,7 @@ package com.kakaotech.back.controller;
 
 import com.kakaotech.back.dto.place.PlaceReqDto;
 import com.kakaotech.back.service.PlaceService;
+import com.kakaotech.back.vo.GooglePlaceIdVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class PlaceController {
 //    }
 
     @PostMapping("")
-    public ResponseEntity<String> getPlaceInfo(@RequestBody PlaceReqDto dto) {
+    public ResponseEntity<GooglePlaceIdVO> getPlaceInfo(@RequestBody PlaceReqDto dto) {
         return ResponseEntity.ok(placeService.getNearbyPlace(dto.placeId()));
     }
 }

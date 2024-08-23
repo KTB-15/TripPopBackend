@@ -1,5 +1,6 @@
 package com.kakaotech.back.service;
 
+import com.kakaotech.back.vo.GooglePlaceIdVO;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClient.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,6 +32,8 @@ class PlaceServiceTest {
     @Mock
     private RestClient restClient;
 
+    private GooglePlaceIdVO expected;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this); // mock 생성을 위한 초기화
@@ -43,9 +47,8 @@ class PlaceServiceTest {
         when(requestBodySpec.body(any(Map.class))).thenReturn(requestBodySpec);
         when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
-        // TODO: 객체 정의시 변경
-        String expectedResponse = "{TODO}";
-        when(responseSpec.body(eq(String.class))).thenReturn(expectedResponse);
+        expected = GooglePlaceIdVO.builder().places(List.of(new GooglePlaceIdVO.Place("place"))).build();
+        when(responseSpec.body(eq(GooglePlaceIdVO.class))).thenReturn(expected);
     }
 
     @Test
@@ -58,10 +61,10 @@ class PlaceServiceTest {
         when(placeRepository.findCoordById(1L)).thenReturn(Optional.of(coord));
 
         // Act
-        String response = placeService.getNearbyPlace(1L);
+        GooglePlaceIdVO result = placeService.getNearbyPlace(1L);
 
         // Assert
-        assertNotNull(response);
-        assertEquals("{TODO}", response);
+        assertNotNull(result);
+        assertEquals(result.places(), expected.places());
     }
 }

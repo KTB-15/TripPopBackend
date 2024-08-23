@@ -2,6 +2,7 @@ package com.kakaotech.back.service;
 
 import com.kakaotech.back.common.exception.ErrorMessage;
 import com.kakaotech.back.common.exception.PlaceException;
+import com.kakaotech.back.vo.GooglePlaceIdVO;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -21,26 +23,51 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
     private final RestClient restClient;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final String NEARBY_SEARCH_URL = "https://places.googleapis.com/v1/places:searchNearby"; // Google Places API URL
+    private final String NEARBY_SEARCH_URL = "https://places.googleapis.com/v1/places:searchNearby"; // 좌표의 Place Id 조회
+    private final String PLACE_REFERENCE_URL = "https://places.googleapis.com/v1/places"; // Place Id에 대한 정보 조회
 
     // 좌표를 통해 구글 Place 주변 장소 검색
-    public String getNearbyPlace(Long placeId) {
-        // 존재하는 ID인지 확인
+    public GooglePlaceIdVO getNearbyPlace(Long placeId) {
+        // 존재하는 id인지 확인
         PlaceCoordVO coord = getCoordinate(placeId);
         var body = getNearbyReqBody(coord);
-
+        logger.info(body.toString());
         try {
             return restClient.post()
                     .uri(NEARBY_SEARCH_URL)
                     .body(body)
                     .retrieve()
-                    .body(String.class);
+                    .body(GooglePlaceIdVO.class);
         } catch (HttpClientErrorException e) {
-            logger.error("FAIL TO GET GOOGLE PLACE INFO: {} - {}",
-                    e.getStatusCode().value(),
-                    e.getResponseBodyAsString());
-            throw e;
+            logError(e);
+            throw new PlaceException(ErrorMessage.GET_PLACE_IMAGE_FAILED);
         }
+    }
+
+    public Map<String, Object> getPlaceReference(Long placeId) {
+        List<GooglePlaceIdVO.Place> googlePlaces = getNearbyPlace(placeId).places();
+        // 좌표에 대한 장소가 없는 경우
+        if (googlePlaces.isEmpty()) throw new PlaceException(ErrorMessage.GET_PLACE_IMAGE_FAILED);
+        String idUrl = googlePlaces.getFirst().name();
+        String googlePlaceId = idUrl.substring(idUrl.lastIndexOf('/') + 1);
+
+
+        try {
+            return restClient.get()
+                    .uri(new StringBuilder(PLACE_REFERENCE_URL).append(googlePlaceId).toString())
+                    .retrieve()
+                    .body(Map.class);
+        } catch (HttpClientErrorException e) {
+            logError(e);
+            throw new PlaceException(ErrorMessage.GET_PLACE_IMAGE_FAILED);
+        }
+    }
+
+    // API 실패 로그 출력
+    private void logError(HttpClientErrorException e) {
+        logger.error("FAIL TO GET GOOGLE PLACE INFO: {} - {}",
+                e.getStatusCode().value(),
+                e.getResponseBodyAsString());
     }
 
     // 좌표만 조회

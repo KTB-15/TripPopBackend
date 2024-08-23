@@ -18,8 +18,7 @@ public class MemberController {
 
     @GetMapping("/exists/{id}")
     public ResponseEntity<Boolean> existsByMemberId(@PathVariable String id) {
-        boolean exists = memberService.existsByMemberId(id);
-        return (exists)? ResponseEntity.ok(true) : ResponseEntity.ok(false);
+        return ResponseEntity.ok(memberService.existsByMemberId(id));
     }
 
     @PostMapping("/join")

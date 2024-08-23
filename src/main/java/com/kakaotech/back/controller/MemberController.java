@@ -1,6 +1,5 @@
 package com.kakaotech.back.controller;
 
-import com.kakaotech.back.common.api.ApiResponse;
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.service.MemberService;
@@ -16,14 +15,14 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/exists/{id}")
-    public ResponseEntity<ApiResponse<Boolean>> existsByMemberId(@PathVariable String id) {
+    public ResponseEntity<Boolean> existsByMemberId(@PathVariable String id) {
         boolean exists = memberService.existsByMemberId(id);
-        return (exists)? ResponseEntity.ok(ApiResponse.success(true)) : ResponseEntity.ok(ApiResponse.success(false));
+        return (exists)? ResponseEntity.ok(true) : ResponseEntity.ok(false);
     }
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse<MemberResponseDto>> saveMember(@RequestBody MemberRequestDto memberRequestDto) {
+    public ResponseEntity<MemberResponseDto> saveMember(@RequestBody MemberRequestDto memberRequestDto) {
         MemberResponseDto memberResponseDto = memberService.saveMember(memberRequestDto);
-        return ResponseEntity.ok(ApiResponse.success(memberResponseDto));
+        return ResponseEntity.ok(memberResponseDto);
     }
 }

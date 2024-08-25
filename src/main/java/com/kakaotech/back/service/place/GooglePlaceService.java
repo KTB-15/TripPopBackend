@@ -43,9 +43,9 @@ public class GooglePlaceService {
         }
     }
 
-    public Map getPlaceDetails(String googlePlaceId) {
+    public Map<String, Object> getPlaceDetails(String googlePlaceId) {
         try {
-            return restClient.get()
+            return (Map<String, Object>) restClient.get()
                     .uri(PLACE_REFERENCE_URL + "/" + googlePlaceId)
                     .header("X-Goog-FieldMask", "photos")
                     .header("X-Goog-Api-Key", apiKey)
@@ -55,15 +55,6 @@ public class GooglePlaceService {
             logger.error("FAILED TO GET PLACE REFERENCE: {}", e.getResponseBodyAsString());
             throw new GoogleApiException("GOOGLE PLACE IMAGE 경로 획득 실패");
         }
-    }
-
-    public String extractPhotoName(Map<String, Object> placeDetails) {
-        return ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("photos")).getFirst()).get("name").toString();
-    }
-
-    public String extractPlaceId(Map<String, Object> placeDetails){
-        String origin = ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("places")).getFirst()).get("name").toString();
-        return origin.split("/")[1];
     }
 
     public byte[] getPlaceImage(String photoName) {
@@ -77,6 +68,15 @@ public class GooglePlaceService {
             logger.error("FAILED TO GET IMAGE: {}", e.getResponseBodyAsString());
             throw new GoogleApiException("GOOGLE IMAGE 획득 실패");
         }
+    }
+
+    public String extractPhotoName(Map<String, Object> placeDetails) {
+        return ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("photos")).getFirst()).get("name").toString();
+    }
+
+    public String extractPlaceId(Map<String, Object> placeDetails){
+        String origin = ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("places")).getFirst()).get("name").toString();
+        return origin.split("/")[1];
     }
 
     private static Map<String, Object> getNearbyReqBody(PlaceCoordVO coord) {

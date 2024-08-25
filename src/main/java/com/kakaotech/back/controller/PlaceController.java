@@ -14,8 +14,9 @@ import java.util.Map;
 public class PlaceController {
     private final PlaceService placeService;
 
-    @PostMapping("/reference")
-    public ResponseEntity<Map<String, Object>> getPlaceReference(@RequestBody PlaceReqDto dto) {
-        return ResponseEntity.ok(placeService.getPlaceReference(dto.placeId()));
+    // TODO: S3 URL 응답
+    @PostMapping("/image")
+    public ResponseEntity<byte[]> getPlaceImage(@RequestBody PlaceReqDto dto) {
+        return ResponseEntity.ok(placeService.getPlaceImage(dto.placeId()));
     }
 }

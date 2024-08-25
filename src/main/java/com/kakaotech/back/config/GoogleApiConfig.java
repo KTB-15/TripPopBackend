@@ -27,6 +27,8 @@ public class GoogleApiConfig {
                                         .build()
                         )
                 )
+                .defaultHeader("Content-Type", "application/json")
+                .defaultHeader("Accept", "image/*")
                 .build();
     }
 }

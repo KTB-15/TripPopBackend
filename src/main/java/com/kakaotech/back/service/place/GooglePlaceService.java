@@ -47,7 +47,7 @@ public class GooglePlaceService {
         try {
             return (Map<String, Object>) restClient.get()
                     .uri(PLACE_REFERENCE_URL + "/" + googlePlaceId)
-                    .header("X-Goog-FieldMask", "photos")
+                    .header("X-Goog-FieldMask", "photos,name,websiteUri,reviews,googleMapsUri")
                     .header("X-Goog-Api-Key", apiKey)
                     .retrieve()
                     .body(Map.class);
@@ -71,10 +71,12 @@ public class GooglePlaceService {
     }
 
     public String extractPhotoName(Map<String, Object> placeDetails) {
+        logger.info("PLACE REFERENCE: {}", placeDetails);
         return ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("photos")).getFirst()).get("name").toString();
     }
 
     public String extractPlaceId(Map<String, Object> placeDetails){
+        logger.info("PLACE INFO: {}", placeDetails);
         String origin = ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("places")).getFirst()).get("name").toString();
         return origin.split("/")[1];
     }
@@ -82,14 +84,14 @@ public class GooglePlaceService {
     private static Map<String, Object> getNearbyReqBody(PlaceCoordVO coord) {
         return Map.of(
                 "maxResultCount", 3, // 최대 3개 장소
-                "rankPreference", "DISTANCE", // 거리순
+                "rankPreference", "POPULARITY", // 거리순
                 "locationRestriction", Map.of(
                         "circle", Map.of(
                                 "center", Map.of(
                                         "latitude", coord.getyCoord(),
                                         "longitude", coord.getxCoord()
                                 ),
-                                "radius", 100 // 100m 이내
+                                "radius", 300 // 100m 이내
                         )
                 )
         );

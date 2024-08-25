@@ -1,7 +1,7 @@
 package com.kakaotech.back.controller;
 
 import com.kakaotech.back.dto.place.PlaceReqDto;
-import com.kakaotech.back.service.PlaceService;
+import com.kakaotech.back.service.place.PlaceService;
 import com.kakaotech.back.vo.GooglePlaceIdVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

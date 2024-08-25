@@ -1,5 +1,6 @@
 package com.kakaotech.back.service;
 
+import com.kakaotech.back.service.place.PlaceService;
 import com.kakaotech.back.vo.GooglePlaceIdVO;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
@@ -13,7 +14,6 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClient.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,8 +48,10 @@ class PlaceServiceTest {
 
         when(restClient.post()).thenReturn(requestBodyUriSpec);
         when(requestBodyUriSpec.uri(anyString())).thenReturn(requestBodySpec);
+        when(requestBodySpec.header(eq("X-Goog-FieldMask"), anyString())).thenReturn(requestBodySpec);
+        when(requestBodySpec.header(eq("X-Goog-Api-Key"), anyString())).thenReturn(requestBodySpec);
         when(requestBodySpec.header(anyString(), anyString())).thenReturn(requestBodySpec);
-        when(requestBodySpec.body(any(Map.class))).thenReturn(requestBodySpec);
+        when(requestBodySpec.body(any(PlaceCoordVO.class))).thenReturn(requestBodySpec);
         when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
         GooglePlaceIdVO expected = GooglePlaceIdVO.builder().places(List.of(new GooglePlaceIdVO.Place("place"))).build();

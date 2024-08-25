@@ -1,4 +1,4 @@
-package com.kakaotech.back.service;
+package com.kakaotech.back.service.place;
 
 import com.kakaotech.back.common.exception.GoogleApiException;
 import com.kakaotech.back.common.exception.NotFoundException;
@@ -10,13 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -49,7 +47,6 @@ public class PlaceService {
                     .uri(NEARBY_SEARCH_URL)
                     .header("X-Goog-FieldMask", "places.name")
                     .header("X-Goog-Api-Key", apiKey)
-                    .header("Content-Type", "application/json")
                     .body(body)
                     .retrieve()
                     .body(GooglePlaceIdVO.class);
@@ -72,22 +69,19 @@ public class PlaceService {
                     .uri(PLACE_REFERENCE_URL + "/" + googlePlaceId)
                     .header("X-Goog-FieldMask", "photos")
                     .header("X-Goog-Api-Key", apiKey)
-                    .header("Content-Type", "application/json")
                     .retrieve()
                     .body(Map.class);
             photoName = getPhotoName(photos);
-            String url = GOOGLE_API_URL_PREFIX + photoName + "/media?maxHeightPx=400&maxWidthPx=400&key=" + apiKey;
+            String url = GOOGLE_API_URL_PREFIX + photoName + "/media?maxHeightPx=800&maxWidthPx=800&key=" + apiKey;
             Path path = Paths.get("src", "main", "resources", "image", placeId + ".jpg");
             ResponseEntity<byte[]> response = restClient.get()
                     .uri(url)
-                    .header("Accept", "image/*")
                     .retrieve()
                     .toEntity(byte[].class);
             logger.info("Response Header: {}", response.getHeaders());
             logger.info("body: {}", response.getBody());
-            logger.info(Arrays.toString(response.getBody())); // JSON 형식 {"name": "places/...", "photoUri": "https://..."}
-            // 왜 json 형식으로 응답받는거지?
-            Files.write(path, response.getBody()); // 파일 손상됨. json을 jpg로 지정했으니까.
+            logger.info(Arrays.toString(response.getBody()));
+            Files.write(path, response.getBody());
             logger.info("Saved to: {}", path.toAbsolutePath());
             return photos;
         } catch (HttpClientErrorException e) {
@@ -115,6 +109,10 @@ public class PlaceService {
     private String getPhotoName(Map placeReference) {
         return ((Map<String, Object>) ((List<Map<String, Object>>) placeReference.get("photos")).get(0)).get("name").toString();
     }
+
+//    private String getPhotoId(Map response) {
+//
+//    }
 
     // Google Places nearby api 요청 데이터
     private static Map<String, Object> getNearbyReqBody(PlaceCoordVO coord) {

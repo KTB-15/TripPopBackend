@@ -3,7 +3,6 @@ package com.kakaotech.back.service.place;
 import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
-import com.kakaotech.back.vo.GooglePlaceIdVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,14 @@ public class PlaceService {
     private final GooglePlaceService googlePlaceService;
     private final PlaceImageService imageService;
 
-    public GooglePlaceIdVO getNearbyPlace(Long placeId) {
+    public Map getNearbyPlace(Long placeId) {
         PlaceCoordVO coord = getCoordinate(placeId);
         return googlePlaceService.getNearbyPlace(coord);
     }
 
     public Map getPlaceReference(Long placeId) {
-        GooglePlaceIdVO nearbyPlace = getNearbyPlace(placeId);
-        String googlePlaceId = googlePlaceService.extractGooglePlaceId(nearbyPlace);
+        Map nearbyPlace = getNearbyPlace(placeId);
+        String googlePlaceId = googlePlaceService.extractPlaceId(nearbyPlace);
 
         Map placeDetails = googlePlaceService.getPlaceDetails(googlePlaceId);
         String photoName = googlePlaceService.extractPhotoName(placeDetails);

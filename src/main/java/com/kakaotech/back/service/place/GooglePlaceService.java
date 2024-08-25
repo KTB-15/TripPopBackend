@@ -1,7 +1,6 @@
 package com.kakaotech.back.service.place;
 
 import com.kakaotech.back.common.exception.GoogleApiException;
-import com.kakaotech.back.vo.GooglePlaceIdVO;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ public class GooglePlaceService {
     @Value("${google.maps.api-key}")
     private String apiKey;
 
-    public GooglePlaceIdVO getNearbyPlace(PlaceCoordVO coord) {
+    public Map getNearbyPlace(PlaceCoordVO coord) {
         var body = getNearbyReqBody(coord);
         try {
             return restClient.post()
@@ -37,20 +36,11 @@ public class GooglePlaceService {
                     .header("Content-Type", "application/json")
                     .body(body)
                     .retrieve()
-                    .body(GooglePlaceIdVO.class);
+                    .body(Map.class);
         } catch (HttpClientErrorException e) {
             logger.error("FAILED TO GET PLACE ID: {}", e.getResponseBodyAsString());
             throw new GoogleApiException("GOOGLE PLACE 조회 실패: " + e.getMessage());
         }
-    }
-
-    public String extractGooglePlaceId(GooglePlaceIdVO nearbyPlace) {
-        List<GooglePlaceIdVO.Place> googlePlaces = nearbyPlace.places();
-        if (googlePlaces.isEmpty()) {
-            throw new GoogleApiException("No nearby places found");
-        }
-        String idUrl = googlePlaces.getFirst().name();
-        return idUrl.substring(idUrl.lastIndexOf('/') + 1);
     }
 
     public Map getPlaceDetails(String googlePlaceId) {
@@ -67,8 +57,13 @@ public class GooglePlaceService {
         }
     }
 
-    public String extractPhotoName(Map placeDetails) {
-        return ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("photos")).get(0)).get("name").toString();
+    public String extractPhotoName(Map<String, Object> placeDetails) {
+        return ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("photos")).getFirst()).get("name").toString();
+    }
+
+    public String extractPlaceId(Map<String, Object> placeDetails){
+        String origin = ((Map<String, Object>) ((List<Map<String, Object>>) placeDetails.get("places")).getFirst()).get("name").toString();
+        return origin.split("/")[1];
     }
 
     public byte[] getPlaceImage(String photoName) {

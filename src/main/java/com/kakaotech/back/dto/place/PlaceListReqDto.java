@@ -11,6 +11,6 @@ import java.util.List;
 public record PlaceListReqDto(
         @NotEmpty(message = "EMPTY ARRAY")
         @Size(max = 10)
-        List<@Min(value = 1, message = "SHOULD BE ABOVE THAN 0") Long> placeId
+        List<@Min(value = 1, message = "SHOULD BE ABOVE THAN 0") Long> places
 ) {
 }

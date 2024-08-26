@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,8 +27,7 @@ public class PlaceService {
     private final PlaceImageService imageService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public PlaceResDto getPlaceImage(PlaceReqDto dto) {
-        Long placeId = dto.placeId();
+    public PlaceResDto getPlaceImage(Long placeId) {
         // S3에 존재하는지 확인
         byte[] imageData = imageService.fetchImage(placeId);
         if (imageData != null) return PlaceResDto.builder().placeId(placeId).image(imageData).build();
@@ -43,7 +43,8 @@ public class PlaceService {
     }
 
     public PlaceListResDto getRecommendedImages(PlaceListReqDto dto) {
-        return PlaceListResDto.builder().build();
+        List<PlaceResDto> recommended = dto.places().parallelStream().map(this::getPlaceImage).toList();
+        return PlaceListResDto.builder().places(recommended).build();
     }
 
     private PlaceCoordVO getCoordinate(Long placeId) {

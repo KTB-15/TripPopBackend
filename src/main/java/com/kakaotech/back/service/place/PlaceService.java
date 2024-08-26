@@ -1,6 +1,9 @@
 package com.kakaotech.back.service.place;
 
 import com.kakaotech.back.common.exception.NotFoundException;
+import com.kakaotech.back.dto.place.PlaceListReqDto;
+import com.kakaotech.back.dto.place.PlaceListResDto;
+import com.kakaotech.back.dto.place.PlaceReqDto;
 import com.kakaotech.back.dto.place.PlaceResDto;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
@@ -11,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Map;
 
 @Service
@@ -24,7 +26,8 @@ public class PlaceService {
     private final PlaceImageService imageService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public PlaceResDto getPlaceImage(Long placeId) {
+    public PlaceResDto getPlaceImage(PlaceReqDto dto) {
+        Long placeId = dto.placeId();
         // S3에 존재하는지 확인
         byte[] imageData = imageService.fetchImage(placeId);
         if (imageData != null) return PlaceResDto.builder().placeId(placeId).image(imageData).build();
@@ -37,6 +40,10 @@ public class PlaceService {
         imageData = googlePlaceService.getPlaceImage(photoName);
         imageService.saveImage(placeId, imageData);
         return PlaceResDto.builder().placeId(placeId).image(imageData).build();
+    }
+
+    public PlaceListResDto getRecommendedImages(PlaceListReqDto dto) {
+        return PlaceListResDto.builder().build();
     }
 
     private PlaceCoordVO getCoordinate(Long placeId) {

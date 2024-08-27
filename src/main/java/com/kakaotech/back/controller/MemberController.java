@@ -2,8 +2,10 @@ package com.kakaotech.back.controller;
 
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.dto.member.MemberResponseDto;
+import com.kakaotech.back.dto.member.MemberSurveyDto;
 import com.kakaotech.back.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +28,11 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.saveMember(memberRequestDto);
         URI location = URI.create("/member/" + memberResponseDto.getId());
         return ResponseEntity.created(location).body(memberResponseDto);
+    }
+
+    // TODO: SecurityContext의 인증정보의 id로 대체
+    @PatchMapping("/survey/{memberId}")
+    public ResponseEntity<MemberSurveyDto> updateTravelStyle(@PathVariable String memberId, @RequestBody MemberSurveyDto memberSurveyDto) {
+        return ResponseEntity.ok(memberService.updateSurvey(memberId, memberSurveyDto));
     }
 }

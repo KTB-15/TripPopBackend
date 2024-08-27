@@ -153,3 +153,58 @@ class MemberServiceTest {
         verify(memberRepository, times(1)).save(any(Member.class));
     }
 }
+
+package com.kakaotech.back.service;
+
+import com.kakaotech.back.dto.member.MemberSurveyDto;
+import com.kakaotech.back.entity.Member;
+import com.kakaotech.back.repository.MemberRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class MemberServiceTest {
+    @Mock
+    private MemberRepository memberRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @InjectMocks
+    private MemberService memberService;
+
+    Member member;
+
+    @BeforeEach
+    void setup() {
+        member = Member.builder()
+                .id("a123456")
+                .age(30)
+                .travelStyle1(1)
+                .build();
+    }
+
+    @Test
+    @DisplayName("여행 성향 변경")
+    void testUpdateTravelStyle() {
+        // Given
+        MemberSurveyDto request = MemberSurveyDto.builder().travelStyle1(7).build();
+
+        // When
+        when(memberRepository.findById(anyString())).thenReturn(Optional.of(member));
+        MemberSurveyDto response = memberService.updateSurvey(member.getId(), request);
+
+        assertEquals(response.travelStyle1(), request.travelStyle1());
+    }
+}

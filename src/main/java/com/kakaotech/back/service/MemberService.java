@@ -1,8 +1,10 @@
 package com.kakaotech.back.service;
 
 import com.kakaotech.back.common.exception.AlreadyExistsException;
+import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.dto.member.MemberRequestDto;
+import com.kakaotech.back.dto.member.MemberSurveyDto;
 import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.MemberRepository;
@@ -26,7 +28,7 @@ public class MemberService {
     @Transactional
     public MemberResponseDto saveMember(MemberRequestDto memberRequestDto) {
         if (memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
-            throw new AlreadyExistsException(memberRequestDto.getMemberId()+"는 이미 존재하는 ID 입니다.");
+            throw new AlreadyExistsException(memberRequestDto.getMemberId() + "는 이미 존재하는 ID 입니다.");
         }
 
         Member member = Member.builder()
@@ -46,6 +48,15 @@ public class MemberService {
                 .build();
 
         return responseDto;
+    }
+
+    @Transactional
+    public MemberSurveyDto updateSurvey(String id, MemberSurveyDto dto) {
+        Member retrievedMember = memberRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("USER NOT FOUND: " + id)
+        );
+        retrievedMember.updateStyle(dto);
+        return MemberSurveyDto.from(retrievedMember);
     }
 
 }

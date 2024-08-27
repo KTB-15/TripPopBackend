@@ -3,7 +3,6 @@ package com.kakaotech.back.service.place;
 import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.dto.place.PlaceListReqDto;
 import com.kakaotech.back.dto.place.PlaceListResDto;
-import com.kakaotech.back.dto.place.PlaceReqDto;
 import com.kakaotech.back.dto.place.PlaceResDto;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;

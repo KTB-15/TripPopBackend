@@ -83,6 +83,8 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<History> histories;
 
+    private boolean activated;
+
     @ManyToMany
     @JoinTable(
             name = "user_authority",

@@ -7,6 +7,10 @@ spring:
   profiles:
     active: "local"
 
+jwt:
+  secret: jWtsECrEtKEy
+  expiration: 3600000
+
 ---
 # local
 server:

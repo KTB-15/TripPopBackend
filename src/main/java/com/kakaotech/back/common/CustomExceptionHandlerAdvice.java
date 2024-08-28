@@ -17,9 +17,4 @@ public class CustomExceptionHandlerAdvice {
     ProblemDetail handleAlreadyExistsException(AlreadyExistsException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
     }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    ProblemDetail handleAccessDeniedException(AccessDeniedException e){
-        return ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, e.getMessage());
-    }
 }

@@ -6,7 +6,9 @@ spring:
       enabled: true
   profiles:
     active: "local"
-
+google:
+  maps:
+    api-key: ${GOOGLE_API_KEY}
 ---
 # local
 server:

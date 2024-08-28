@@ -17,4 +17,9 @@ public class CustomExceptionHandlerAdvice {
     ProblemDetail handleAlreadyExistsException(AlreadyExistsException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
     }
+
+    @ExceptionHandler(GoogleApiException.class)
+    ProblemDetail handleExternalApiException(GoogleApiException e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, e.getMessage());
+    }
 }

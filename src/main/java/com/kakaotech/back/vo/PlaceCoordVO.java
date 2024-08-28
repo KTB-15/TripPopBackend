@@ -1,4 +1,4 @@
-package com.kakaotech.back.entity.projection;
+package com.kakaotech.back.vo;
 
 public interface PlaceCoordVO {
     Long getId();

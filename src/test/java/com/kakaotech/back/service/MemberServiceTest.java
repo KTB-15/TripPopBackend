@@ -108,7 +108,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("같은 member id를 가진 client가 동시에 save할 경우 1개는 성공, 2개는 실패")
+    @DisplayName("같은 member id를 가진 client가 동시에 save할 경우 1번은 성공, 2번은 실패")
     void saveMember_WhenTwoClientsUseSameId_OneShouldFail() throws InterruptedException {
         // Given
         MemberRequestDto memberRequestDto = MemberRequestDto.builder()

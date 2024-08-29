@@ -16,6 +16,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Authority {
 
     @Id
-    @Column(name = "authority_name", length = 50)
+    @Column(name = "authority_name")
     private String authorityName;
 }

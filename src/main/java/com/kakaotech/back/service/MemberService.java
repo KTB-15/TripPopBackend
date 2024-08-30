@@ -1,6 +1,8 @@
 package com.kakaotech.back.service;
 
 import com.kakaotech.back.common.exception.AlreadyExistsException;
+import com.kakaotech.back.common.exception.NotFoundException;
+import com.kakaotech.back.dto.member.MemberDto;
 import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.entity.Authority;
@@ -8,6 +10,7 @@ import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.AuthorityRepository;
 import com.kakaotech.back.repository.MemberRepository;
+import com.kakaotech.back.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -64,4 +67,15 @@ public class MemberService {
         return responseDto;
     }
 
+    public MemberDto getMemberWithAuthorities(String username) {
+        return MemberDto.from(memberRepository.findOneWithAuthoritiesByMemberId(username).orElse(null));
+    }
+
+    public MemberDto getMemberWithAuthorities() {
+        return MemberDto.from(
+                SecurityUtil.getCurrentUsername()
+                        .flatMap(memberRepository::findOneWithAuthoritiesByMemberId)
+                        .orElseThrow(() -> new NotFoundException("Member not found"))
+        );
+    }
 }

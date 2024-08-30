@@ -3,7 +3,6 @@ package com.kakaotech.back.dto.auth;
 import lombok.*;
 
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

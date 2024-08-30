@@ -1,6 +1,5 @@
 package com.kakaotech.back.jwt;
 
-import com.kakaotech.back.entity.Authority;
 import com.kakaotech.back.entity.RefreshToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -126,6 +125,7 @@ public class TokenProvider implements InitializingBean {
             return createAccessTokenWithClaims(claims);
         } else {
             // refresh token이 유효하지 않거나 존재하지 않을 때 null을 반환
+            // TODO: 재로그인
             return null;
         }
     }

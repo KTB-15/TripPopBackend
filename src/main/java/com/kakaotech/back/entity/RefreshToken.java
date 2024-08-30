@@ -6,10 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
-import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 @Builder
 @Getter
@@ -20,7 +19,8 @@ public class RefreshToken {
 
     private String id;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    @JsonProperty("authorities")
+    private List<String> authorities; // 문자열 리스트로 변경
 
     @Indexed
     private String refreshToken;

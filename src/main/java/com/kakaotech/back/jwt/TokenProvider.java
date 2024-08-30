@@ -19,10 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -44,8 +41,8 @@ public class TokenProvider implements InitializingBean {
             @Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInMilliseconds) {
         this.redisTemplate = redisTemplate;
         this.secret = secret;
-        this.accessTokenValidityInMilliseconds = accessTokenValidityInSeconds * 1000;
-        this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds * 1000;
+        this.accessTokenValidityInMilliseconds = accessTokenValidityInSeconds;
+        this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds;
     }
 
     @Override
@@ -88,7 +85,7 @@ public class TokenProvider implements InitializingBean {
         RefreshToken refreshTokenObj = RefreshToken.builder()
                 .id(authentication.getName())
                 .refreshToken(refreshToken)
-                .authorities(authentication.getAuthorities())
+                .authorities(Collections.singletonList(authorities))
                 .build();
 
         redisTemplate.opsForValue().set(

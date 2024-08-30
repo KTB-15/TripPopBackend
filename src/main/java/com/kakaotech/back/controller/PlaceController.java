@@ -16,12 +16,12 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @PostMapping("/image")
-    public ResponseEntity<PlaceResDto> getPlaceImage(@RequestBody PlaceReqDto dto) {
-        return ResponseEntity.ok(placeService.getPlaceImage(dto.placeId()));
+    public ResponseEntity<PlaceResDto> getPlaceImage(@RequestBody PlaceReqDto placeReqDto) {
+        return ResponseEntity.ok(placeService.getPlaceImage(placeReqDto.placeId()));
     }
 
     @PostMapping("/recommended")
-    public ResponseEntity<PlaceListResDto> getRecommendedImages(@RequestBody PlaceListReqDto dto){
-        return ResponseEntity.ok(placeService.getRecommendedImages(dto));
+    public ResponseEntity<PlaceListResDto> getRecommendedImages(@RequestBody PlaceListReqDto placeListReqDto){
+        return ResponseEntity.ok(placeService.getRecommendedImages(placeListReqDto));
     }
 }

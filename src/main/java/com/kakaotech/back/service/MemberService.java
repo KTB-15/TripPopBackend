@@ -6,6 +6,7 @@ import com.kakaotech.back.dto.member.MemberDto;
 import com.kakaotech.back.dto.member.MemberResponseDto;
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.entity.Authority;
+import com.kakaotech.back.dto.member.MemberSurveyDto;
 import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.AuthorityRepository;
@@ -34,7 +35,7 @@ public class MemberService {
     @Transactional
     public MemberResponseDto saveMember(MemberRequestDto memberRequestDto) {
         if (memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
-            throw new AlreadyExistsException(memberRequestDto.getMemberId()+"는 이미 존재하는 ID 입니다.");
+            throw new AlreadyExistsException(memberRequestDto.getMemberId() + "는 이미 존재하는 ID 입니다.");
         }
 
         if(!authorityRepository.existsByAuthorityName("ROLE_USER")) {
@@ -77,5 +78,14 @@ public class MemberService {
                         .flatMap(memberRepository::findOneWithAuthoritiesByMemberId)
                         .orElseThrow(() -> new NotFoundException("Member not found"))
         );
+    }
+  
+    @Transactional
+    public MemberSurveyDto updateSurvey(String id, MemberSurveyDto dto) {
+        Member retrievedMember = memberRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("USER NOT FOUND: " + id)
+        );
+        retrievedMember.updateStyle(dto);
+        return MemberSurveyDto.from(retrievedMember);
     }
 }

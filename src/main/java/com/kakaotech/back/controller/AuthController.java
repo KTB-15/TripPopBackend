@@ -38,7 +38,6 @@ public class AuthController {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + tokenDto.getAccessToken());
 
         return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
-
     }
 
     @PostMapping("/refresh-token")

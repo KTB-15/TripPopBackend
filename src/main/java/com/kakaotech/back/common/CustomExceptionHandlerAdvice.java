@@ -19,7 +19,7 @@ public class CustomExceptionHandlerAdvice {
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    ProblemDetail handleAlreadyExistsException(UnauthorizedException e){
+    ProblemDetail handleUnauthorizedException(UnauthorizedException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 }

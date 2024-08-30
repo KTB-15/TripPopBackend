@@ -3,29 +3,33 @@ package com.kakaotech.back.service;
 import com.kakaotech.back.common.exception.AlreadyExistsException;
 import com.kakaotech.back.dto.member.MemberRequestDto;
 import com.kakaotech.back.dto.member.MemberResponseDto;
+import com.kakaotech.back.dto.member.MemberSurveyDto;
 import com.kakaotech.back.entity.Gender;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.MemberRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
-
     @Mock
     private MemberRepository memberRepository;
 
@@ -34,11 +38,6 @@ class MemberServiceTest {
 
     @InjectMocks
     private MemberService memberService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     @DisplayName("멤버를 등록할 때, 멤버가 이미 존재하는 경우 예외")
@@ -151,5 +150,24 @@ class MemberServiceTest {
         // Verifications
         verify(memberRepository, times(2)).existsByMemberId("duplicateId");
         verify(memberRepository, times(1)).save(any(Member.class));
+    }
+
+
+    @Test
+    @DisplayName("여행 성향 변경")
+    void testUpdateTravelStyle() {
+        // Given
+        Member member = Member.builder()
+                .id("a123456")
+                .age(30)
+                .travelStyle1(1)
+                .build();
+        MemberSurveyDto request = MemberSurveyDto.builder().travelStyle1(7).build();
+
+        // When
+        when(memberRepository.findById(anyString())).thenReturn(Optional.of(member));
+        MemberSurveyDto response = memberService.updateSurvey(member.getId(), request);
+
+        assertEquals(response.travelStyle1(), request.travelStyle1());
     }
 }

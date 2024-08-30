@@ -1,6 +1,8 @@
 package com.kakaotech.back.service.place;
 
 import com.kakaotech.back.common.exception.NotFoundException;
+import com.kakaotech.back.dto.place.PlaceListReqDto;
+import com.kakaotech.back.dto.place.PlaceListResDto;
 import com.kakaotech.back.dto.place.PlaceResDto;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
@@ -11,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -37,6 +39,11 @@ public class PlaceService {
         imageData = googlePlaceService.getPlaceImage(photoName);
         imageService.saveImage(placeId, imageData);
         return PlaceResDto.builder().placeId(placeId).image(imageData).build();
+    }
+
+    public PlaceListResDto getRecommendedImages(PlaceListReqDto dto) {
+        List<PlaceResDto> recommended = dto.places().parallelStream().map(this::getPlaceImage).toList();
+        return PlaceListResDto.builder().places(recommended).build();
     }
 
     private PlaceCoordVO getCoordinate(Long placeId) {

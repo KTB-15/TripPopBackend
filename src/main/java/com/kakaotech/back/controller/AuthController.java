@@ -29,7 +29,7 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<TokenDto> signIn(@Valid @RequestBody LoginDto loginDto, HttpServletRequest request) {
 
         // AuthenticationToken 생성
@@ -51,5 +51,17 @@ public class AuthController {
 
         return new ResponseEntity<>(new TokenDto(accessToken, refreshToken), httpHeaders, HttpStatus.OK);
 
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<TokenDto> refreshAccessToken(@RequestBody String refreshToken) {
+        // refresh token의 유효성 검사 및 새로운 access token 발급
+        String newAccessToken = tokenProvider.refreshAccessToken(refreshToken);
+
+        if (newAccessToken == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(new TokenDto(newAccessToken, refreshToken), HttpStatus.OK);
     }
 }

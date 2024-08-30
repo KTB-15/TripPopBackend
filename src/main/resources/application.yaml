@@ -13,7 +13,16 @@ jwt:
   # TODO: access token test 후 시간 변경 6시간으로 할 예정
   access-token-validity-in-seconds: 60000  # 60초
   refresh-token-validity-in-seconds: 604800000  # 7일
-
+google:
+  maps:
+    api-key: ${GOOGLE_API_KEY}
+aws:
+  region: ${AWS_REGION}
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  s3:
+    bucket-name: ${AWS_BUCKET_NAME}
+    
 ---
 # local
 server:
@@ -33,13 +42,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
 logging:
   level:
     com:
       kakaotech:
         back: DEBUG
-
+        
 ---
 # dev
 server:

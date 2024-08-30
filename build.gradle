@@ -44,6 +44,9 @@ dependencies {
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'redis.clients:jedis:5.0.0' // Jedis 클라이언트 사용
+  
+	// Amazon SDK
+	implementation 'software.amazon.awssdk:s3:2.27.12'
 }
 
 tasks.named('test') {

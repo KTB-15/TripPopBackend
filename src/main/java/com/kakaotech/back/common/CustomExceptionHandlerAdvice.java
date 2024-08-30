@@ -22,4 +22,9 @@ public class CustomExceptionHandlerAdvice {
     ProblemDetail handleUnauthorizedException(UnauthorizedException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
+  
+    @ExceptionHandler(GoogleApiException.class)
+    ProblemDetail handleExternalApiException(GoogleApiException e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, e.getMessage());
+    }
 }

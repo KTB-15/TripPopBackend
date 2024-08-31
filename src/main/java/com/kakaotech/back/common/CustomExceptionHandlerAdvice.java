@@ -18,6 +18,11 @@ public class CustomExceptionHandlerAdvice {
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    ProblemDetail handleUnauthorizedException(UnauthorizedException e){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
+  
     @ExceptionHandler(GoogleApiException.class)
     ProblemDetail handleExternalApiException(GoogleApiException e){
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, e.getMessage());

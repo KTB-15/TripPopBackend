@@ -42,6 +42,7 @@ public class MemberController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<MemberDto> getMemberInfo(@PathVariable String username) {
         return ResponseEntity.ok(memberService.getMemberWithAuthorities(username));
+    }
 
     // TODO: SecurityContext의 인증정보의 id로 대체
     @PatchMapping("/survey/{memberId}")

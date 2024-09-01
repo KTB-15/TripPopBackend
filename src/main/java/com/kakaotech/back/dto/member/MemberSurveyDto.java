@@ -7,7 +7,7 @@ import lombok.Builder;
 public record MemberSurveyDto(
         Integer travelStyle1,
         Integer travelStyle2,
-        Integer travelStyle3,
+//        Integer travelStyle3, 미사용
         Integer travelStyle4,
         Integer travelStyle5,
         Integer travelStyle6,
@@ -18,7 +18,7 @@ public record MemberSurveyDto(
         return MemberSurveyDto.builder()
                 .travelStyle1(member.getTravelStyle1())
                 .travelStyle2(member.getTravelStyle2())
-                .travelStyle3(member.getTravelStyle3())
+//                .travelStyle3(member.getTravelStyle3()) 미사용
                 .travelStyle4(member.getTravelStyle4())
                 .travelStyle5(member.getTravelStyle5())
                 .travelStyle6(member.getTravelStyle6())

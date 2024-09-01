@@ -104,7 +104,6 @@ public class Member {
     public void updateStyle(MemberSurveyDto dto){
         this.travelStyle1 = dto.travelStyle1();
         this.travelStyle2 = dto.travelStyle2();
-        this.travelStyle3 = dto.travelStyle3();
         this.travelStyle4 = dto.travelStyle4();
         this.travelStyle5 = dto.travelStyle5();
         this.travelStyle6 = dto.travelStyle6();

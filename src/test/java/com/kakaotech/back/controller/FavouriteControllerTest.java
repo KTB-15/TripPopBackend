@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
@@ -33,8 +34,9 @@ public class FavouriteControllerTest {
     @DisplayName("즐겨찾기 등록 성공")
     void testRegisterFavouriteSuccess() throws Exception {
         // Arrange
-        RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId("MEMBER_ID").placeId(1L).build();
-        when(favouriteService.registerFavourite(dto)).thenReturn(true);
+        String memberId = "MEMBER_ID";
+        RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId(memberId).placeId(1L).build();
+        when(favouriteService.registerFavourite(memberId, dto)).thenReturn(true);
 
         // Act + Assert
         mockMvc.perform(post("/favourite")
@@ -46,15 +48,16 @@ public class FavouriteControllerTest {
 
     @Test
     @DisplayName("즐겨찾기 등록 실패 - 404")
+    @WithMockUser(username = "MEMBER_ID", roles = "USER")
     void testRegisterFavouriteFailNotFound() throws Exception {
         // Arrange
         RegisterFavouriteDto dto = RegisterFavouriteDto.builder().memberId("MEMBER_ID").placeId(1L).build();
-        when(favouriteService.registerFavourite(any())).thenThrow(new NotFoundException("존재하지 않은 member 입니다."));
+        when(favouriteService.registerFavourite(anyString(), any())).thenThrow(new NotFoundException("존재하지 않은 member 입니다."));
 
         // Act + Assert
         mockMvc.perform(post("/favourite")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
     }
 
@@ -76,7 +79,7 @@ public class FavouriteControllerTest {
     void testDeleteFavouriteFailNotFound() throws Exception {
         // Arrange
         Long favouriteId = -1L;
-        doThrow(new NotFoundException(favouriteId+"로 생성된 favourite는 존재하지 않습니다.")).when(favouriteService).deleteFavourite(favouriteId);
+        doThrow(new NotFoundException(favouriteId + "로 생성된 favourite는 존재하지 않습니다.")).when(favouriteService).deleteFavourite(favouriteId);
 
         // Act + Assert
         mockMvc.perform(delete("/favourite/{favouriteId}", favouriteId))

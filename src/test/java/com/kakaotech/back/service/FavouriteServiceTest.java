@@ -68,7 +68,7 @@ public class FavouriteServiceTest {
         when(favouriteRepository.save(any(Favourite.class))).thenReturn(favourite);
 
         // Act
-        Boolean result = favouriteService.registerFavourite(dto);
+        Boolean result = favouriteService.registerFavourite(member.getMemberId(), dto);
 
         // Assert
         assertEquals(true, result);
@@ -84,7 +84,7 @@ public class FavouriteServiceTest {
         when(memberRepository.findById(dto.getMemberId())).thenReturn(Optional.empty());
 
         // Act + Assert
-        assertThrows(NotFoundException.class, () -> favouriteService.registerFavourite(dto));
+        assertThrows(NotFoundException.class, () -> favouriteService.registerFavourite(member.getMemberId(), dto));
 
         verify(memberRepository, times(1)).findById(dto.getMemberId());
         verify(placeRepository, never()).findById(any());

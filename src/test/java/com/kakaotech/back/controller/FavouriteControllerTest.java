@@ -3,6 +3,7 @@ package com.kakaotech.back.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.dto.favourite.RegisterFavouriteDto;
+import com.kakaotech.back.service.CustomUserDetailsService;
 import com.kakaotech.back.service.FavouriteService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,7 @@ public class FavouriteControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    // TODO: AuthPrincipal 사용 이후로 오류
     @Test
     @DisplayName("즐겨찾기 등록 성공")
     void testRegisterFavouriteSuccess() throws Exception {

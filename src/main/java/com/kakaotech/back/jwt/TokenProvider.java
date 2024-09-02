@@ -36,11 +36,11 @@ public class TokenProvider implements InitializingBean {
 
     public TokenProvider(
             RedisTemplate<String, Object> redisTemplate, @Value("${jwt.secret}") String secret,
-            @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInSeconds,
+            @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInMilliSeconds,
             @Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInMilliseconds) {
         this.redisTemplate = redisTemplate;
         this.secret = secret;
-        this.accessTokenValidityInMilliseconds = accessTokenValidityInSeconds;
+        this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliSeconds;
         this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds;
     }
 

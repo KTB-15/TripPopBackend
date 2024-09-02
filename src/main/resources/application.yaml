@@ -11,7 +11,7 @@ jwt:
   header: Authorization
   secret: dGVkZHkta2FrYW8tYm9vdC1jYW1wLWZpcnN0LXByb2plY3Qtc3ByaW5nLXNlY3VyaXR5LWp3dC1maWZ0ZWVuLXR1dG9yaWFsLXNlY3JldC1rZXkK
   # TODO: access token test 후 시간 변경 6시간으로 할 예정
-  access-token-validity-in-seconds: 60000  # 60초
+  access-token-validity-in-seconds: 2160000 # 6시간
   refresh-token-validity-in-seconds: 604800000  # 7일
 google:
   maps:

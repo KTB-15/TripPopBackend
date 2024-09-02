@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("")
+    @PostMapping("/login")
     public ResponseEntity<TokenDto> signIn(@Valid @RequestBody LoginDto loginDto, HttpServletRequest request) {
         TokenDto tokenDto = authService.signin(loginDto, request);
 
@@ -43,6 +43,7 @@ public class AuthController {
     @PostMapping("/refresh-token")
     public ResponseEntity<TokenDto> refreshAccessToken(@RequestBody String refreshToken) {
         TokenDto tokenDto = authService.refreshAccessToken(refreshToken);
+        System.out.println(refreshToken);
 
         return new ResponseEntity<>(tokenDto, HttpStatus.OK);
     }

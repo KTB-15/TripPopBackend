@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/member/exists/**", "/member/join", "/login", "/login/refresh-token").permitAll() // member join, exists 시 경로에 대한 접근 허용
+                        .requestMatchers("/member/exists/**", "/member/join", "/auth/login", "/auth/refresh-token").permitAll() // 권한 확인 없는 url
                         .anyRequest().authenticated() // 그 외의 요청은 인증 필요
                 )
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정

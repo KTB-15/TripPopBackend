@@ -1,5 +1,6 @@
 package com.kakaotech.back.service;
 
+import com.kakaotech.back.dto.oauth.CustomOAuth2User;
 import com.kakaotech.back.dto.oauth.GoogleResponse;
 import com.kakaotech.back.dto.oauth.OAuth2Response;
 import com.kakaotech.back.dto.oauth.UserDto;

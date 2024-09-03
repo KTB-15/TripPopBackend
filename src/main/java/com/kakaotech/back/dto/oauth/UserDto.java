@@ -11,5 +11,5 @@ import java.util.Set;
 public class UserDto {
     private Set<Authority> authorities;
     private String name;
-    private String username;
+    private String memberId;
 }

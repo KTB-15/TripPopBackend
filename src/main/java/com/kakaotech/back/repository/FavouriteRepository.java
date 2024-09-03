@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface FavouriteRepository extends JpaRepository<Favourite, Long> {
     Optional<List<Favourite>> findByMember(Member member);
+    Optional<List<Favourite>> findByMemberIdAndPlaceIdIn(String memberId, List<Long> placeIds);
 }

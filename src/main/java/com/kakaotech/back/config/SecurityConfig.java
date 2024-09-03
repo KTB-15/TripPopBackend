@@ -28,6 +28,7 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomSuccessHandler customSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,7 +41,9 @@ public class SecurityConfig {
                 )
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService)))
+                                .userService(customOAuth2UserService))
+                        .successHandler(customSuccessHandler)
+                )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/member/exists/**", "/member/join", "/auth/login", "/auth/refresh-token").permitAll() // 권한 확인 없는 url
                         .anyRequest().authenticated() // 그 외의 요청은 인증 필요

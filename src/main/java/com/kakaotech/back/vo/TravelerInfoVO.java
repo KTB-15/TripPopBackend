@@ -28,8 +28,8 @@ public record TravelerInfoVO(
                 .travelStyle6(member.getTravelStyle6())
                 .travelStyle7(member.getTravelStyle7())
                 .travelStyle8(member.getTravelStyle8())
-                .sidoName(member.getTravelLikeSGG().getSidoName())
-                .sggName(member.getTravelLikeSGG().getSggName())
+                .sidoName("SIDO")
+                .sggName("SGG")
                 .build();
     }
 }

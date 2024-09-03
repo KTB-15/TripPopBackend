@@ -5,6 +5,7 @@ import com.kakaotech.back.service.RecommendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ public class RecommendController {
     private final RecommendService recommendService;
 
     // 사용자 아이디 이용
+    @GetMapping
     public List<RecommendResDto> getRecommendedPlaceInfo (@AuthenticationPrincipal UserDetails userDetails){
         return recommendService.getRecommendedPlaceInfo(userDetails.getUsername());
     }

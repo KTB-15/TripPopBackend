@@ -28,24 +28,25 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
         // JWT 토큰 생성
         String accessToken = tokenProvider.createAccessToken(authentication);
         String refreshToken = tokenProvider.createRefreshToken(authentication);
 
-        response.addCookie(generateokenCookie("accessToken", accessToken));
-        response.addCookie(generateokenCookie("refreshToken", refreshToken));
+        response.addCookie(generateTokenCookie("accessToken", accessToken));
+        response.addCookie(generateTokenCookie("refreshToken", refreshToken));
 
         logger.debug("accessToken: " + accessToken);
         logger.debug("refreshToken: " + refreshToken);
 
-        response.sendRedirect("http://localhost:5173/");
+        response.sendRedirect("http://localhost:5173/jwt-token");
     }
 
-    public Cookie generateokenCookie(String key, String token) {
-       Cookie cookie = new Cookie(key, token);
-       cookie.setPath("/");
-       cookie.setHttpOnly(true);
-       return cookie;
+    public Cookie generateTokenCookie(String key, String token) {
+        Cookie cookie = new Cookie(key, token);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        return cookie;
     }
 
 }

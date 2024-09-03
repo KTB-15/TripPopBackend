@@ -18,12 +18,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class FavouriteService {
     private final FavouriteRepository favouriteRepository;
     private final MemberRepository memberRepository;
     private final PlaceRepository placeRepository;
 
-    @Transactional(readOnly = true)
     public List<Favourite> getFavourites(String memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
         if (member.isEmpty()) throw new NotFoundException(memberId + "로 생성된 member는 존재하지 않습니다.");

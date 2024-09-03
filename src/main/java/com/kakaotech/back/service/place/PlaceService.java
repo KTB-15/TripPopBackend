@@ -54,6 +54,10 @@ public class PlaceService {
         );
     }
 
+    public List<Place> getPlacesInOrder(List<Long> placeIds){
+        return placeRepository.findByIdInOrderById(placeIds);
+    }
+
     public PlaceListResDto getRecommendedImages(PlaceListReqDto dto) {
         List<PlaceResDto> recommended = dto.places().parallelStream().map(this::getPlaceDto).toList();
         return PlaceListResDto.builder().places(recommended).build();

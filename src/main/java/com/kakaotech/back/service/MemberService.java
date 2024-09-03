@@ -81,12 +81,6 @@ public class MemberService {
         );
     }
 
-    public TravelerInfoVO getTravelerInfo() {
-        return TravelerInfoVO.from(SecurityUtil.getCurrentUsername()
-                .flatMap(memberRepository::findOneWithAuthoritiesByMemberId)
-                .orElseThrow(() -> new NotFoundException("Member not found")));
-    }
-
     @Transactional
     public MemberSurveyDto updateSurvey(String id, MemberSurveyDto dto) {
         Member retrievedMember = memberRepository.findById(id).orElseThrow(

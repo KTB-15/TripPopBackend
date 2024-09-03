@@ -33,7 +33,10 @@ public class RecommendService {
     // 추천 여행지 관련 정보
     public List<RecommendResDto> getRecommendedPlaceInfo(String memberId) {
         // 여행 성향에 맞는 추천 여행지 수신
-        TravelerInfoVO travelerInfo = getTravelerInfo(memberId);
+        Member member = memberRepository.findOneWithAuthoritiesByMemberId(memberId).orElseThrow(
+                () -> new NotFoundException(NotFoundException.messageWithInfo(memberId))
+        );
+        TravelerInfoVO travelerInfo = TravelerInfoVO.from(member);
         List<Place> recommended = getRecommendedPlaces(travelerInfo);
 
         // 추천받은 여행지에 대한 정보, 이미지 및 즐겨찾기 상태 여부 조회
@@ -42,7 +45,7 @@ public class RecommendService {
                 .sorted(Map.Entry.comparingByKey())
                 .map(Map.Entry::getValue)
                 .toList();
-        List<Favourite> alreadyFavourite = favouriteRepository.findByMemberIdAndPlaceIdIn(memberId, placeIds).orElse(List.of());
+        List<Favourite> alreadyFavourite = favouriteRepository.findByMemberIdAndPlaceIdIn(member.getId(), placeIds).orElse(List.of());
         List<Boolean> isAlreadyLiked = isAlreadyFavouriteForPlace(alreadyFavourite, placeIds);
 
         // 응답 준비
@@ -59,18 +62,10 @@ public class RecommendService {
         return placeService.getPlacesInOrder(placeIds);
     }
 
-    // 사용자 여행 성향
-    private TravelerInfoVO getTravelerInfo(String memberId) {
-        Member member = memberRepository.findOneWithAuthoritiesByMemberId(memberId).orElseThrow(
-                () -> new NotFoundException(NotFoundException.messageWithInfo(memberId))
-        );
-        return TravelerInfoVO.from(member);
-    }
-
     // 추천받은 여행지를 이미 즐겨찾기 했는지 확인
     private List<Boolean> isAlreadyFavouriteForPlace(List<Favourite> favourites, List<Long> placeIds){
         List<Long> likedPlaceIds = favourites.stream()
-                .map(Favourite::getId)
+                .map(f -> f.getPlace().getId())
                 .toList();
         return placeIds.stream()
                 .map(likedPlaceIds::contains)

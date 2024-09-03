@@ -47,7 +47,7 @@ public class SecurityConfig {
                         .failureHandler(customFailureHandler)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/member/exists/**", "/member/join", "/auth/login", "/auth/refresh-token").permitAll() // 권한 확인 없는 url
+                        .requestMatchers("/member/exists/**", "/member/join", "/auth/login", "/auth/refresh-token", "/auth/jwt-token").permitAll() // 권한 확인 없는 url
                         .anyRequest().authenticated() // 그 외의 요청은 인증 필요
                 )
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정

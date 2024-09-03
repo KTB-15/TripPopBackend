@@ -53,8 +53,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             Authority authority = Authority.builder()
                     .authorityName("ROLE_USER")
                     .build();
-            Member member = null;
 
+            Member member = null;
             if(oAuth2Response instanceof GoogleResponse){
                 member = Member.builder()
                         .memberId(memberId)
@@ -74,7 +74,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             userDto = UserDto.builder()
                     .name(oAuth2Response.getName())
-                    .memberId(memberId)
+                    .memberId(existingMember.getMemberId())
                     .authorities(existingMember.getAuthorities())
                     .build();
         }

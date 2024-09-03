@@ -1,7 +1,10 @@
 package com.kakaotech.back.service;
 
+import com.kakaotech.back.dto.member.MemberDto;
+import com.kakaotech.back.dto.oauth.CustomOAuth2User;
 import com.kakaotech.back.dto.oauth.GoogleResponse;
 import com.kakaotech.back.dto.oauth.OAuth2Response;
+import com.kakaotech.back.dto.oauth.UserDto;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -36,6 +39,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         //추후 작성
-        return null;
+        String username = oAuth2Response.getProvider()+ " " + oAuth2Response.getProviderId();
+        UserDto userDto = UserDto.builder()
+                .name(oAuth2Response.getName())
+                .username(username)
+                .role("ROLE_USER")
+                .build();
+
+        return new CustomOAuth2User(userDto);
     }
 }

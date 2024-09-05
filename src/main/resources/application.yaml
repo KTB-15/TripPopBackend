@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: back
+  datasource:
+    url: jdbc:postgresql://terraform-20240902053913321000000003.c30amqseslng.ap-northeast-2.rds.amazonaws.com:5432/trippop
+    username: masteruser
+    password: KTB_test_1120
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

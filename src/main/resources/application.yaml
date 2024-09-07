@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: TripPop
+  mvc:
+    problemdetails:
+      enabled: true
+  profiles:
+    active: "local"
+
+jwt:
+  header: Authorization
+  secret: dGVkZHkta2FrYW8tYm9vdC1jYW1wLWZpcnN0LXByb2plY3Qtc3ByaW5nLXNlY3VyaXR5LWp3dC1maWZ0ZWVuLXR1dG9yaWFsLXNlY3JldC1rZXkK
+  # TODO: access token test 후 시간 변경 6시간으로 할 예정
+  access-token-validity-in-seconds: 2160000 # 6시간
+  refresh-token-validity-in-seconds: 604800000  # 7일
+google:
+  maps:
+    api-key: ${GOOGLE_API_KEY}
+aws:
+  region: ${AWS_REGION}
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  s3:
+    bucket-name: ${AWS_BUCKET_NAME}
+    
+---
+# local
+server:
+  port: ${LOCAL_PORT:8080}
+spring:
+  config:
+    activate:
+      on-profile: "local"
+  datasource:
+    url: ${LOCAL_POSTGRESQL_URL}
+    username: ${LOCAL_POSTGRESQL_USERNAME}
+    password: ${LOCAL_POSTGRESQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    com:
+      kakaotech:
+        back: DEBUG
+        
+---
+# dev
+server:
+  port: ${DEV_PORT:8080}
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+  datasource:
+    url: ${DEV_POSTGRESQL_URL}
+    username: ${DEV_POSTGRESQL_USERNAME}
+    password: ${DEV_POSTGRESQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update

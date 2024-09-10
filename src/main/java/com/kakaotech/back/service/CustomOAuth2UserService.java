@@ -8,11 +8,15 @@ import com.kakaotech.back.entity.Authority;
 import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -21,13 +25,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private MemberRepository memberRepository;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Transactional
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        System.out.println(oAuth2User);
+        logger.info("oAuth2User check : " + oAuth2User);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         OAuth2Response oAuth2Response = null;
@@ -46,6 +52,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         String memberId = oAuth2Response.getProvider()+ " " + oAuth2Response.getProviderId();
+        logger.info("OAuth member Id : " + memberId);
         Optional<Member> existData = memberRepository.findOneWithAuthoritiesByMemberId(memberId);
 
         UserDto userDto = null;

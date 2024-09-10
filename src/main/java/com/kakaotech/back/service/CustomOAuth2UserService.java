@@ -30,33 +30,26 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        logger.info("oAuth2User check : " + oAuth2User);
-
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         OAuth2Response oAuth2Response = null;
         if (registrationId.equals("naver")) {
-            // TODO: Naver OAuth 추가
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
         }
         else if (registrationId.equals("google")) {
             oAuth2Response = (OAuth2Response) new GoogleResponse(oAuth2User.getAttributes());
         }
         else if (registrationId.equals("kakao")){
-            // TODO: Kakao OAuth 추가
-            System.out.println("oAuth2User.getAttributes() :  "+ oAuth2User.getAttributes());
             oAuth2Response = new KakaoResponse(oAuth2User.getAttributes(), oAuth2User.getAttributes());
         } else {
 
-            logger.info("not exists oauth");
+            logger.error("not exists oauth");
             return null;
         }
 
         String memberId = oAuth2Response.getProvider()+ " " + oAuth2Response.getProviderId();
-        logger.info("OAuth member Id : " + memberId);
         Optional<Member> existData = memberRepository.findOneWithAuthoritiesByMemberId(memberId);
 
         UserDto userDto = null;
-        logger.info("userDto : " + userDto);
         if (existData.isEmpty()) {
 
             Authority authority = Authority.builder()

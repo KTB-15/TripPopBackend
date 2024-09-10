@@ -3,7 +3,9 @@ package com.kakaotech.back.service.place;
 import com.kakaotech.back.common.exception.NotFoundException;
 import com.kakaotech.back.dto.place.PlaceListReqDto;
 import com.kakaotech.back.dto.place.PlaceListResDto;
+import com.kakaotech.back.dto.place.PlaceReqDto;
 import com.kakaotech.back.dto.place.PlaceResDto;
+import com.kakaotech.back.entity.Place;
 import com.kakaotech.back.vo.PlaceCoordVO;
 import com.kakaotech.back.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,23 +29,37 @@ public class PlaceService {
     private final PlaceImageService imageService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public PlaceResDto getPlaceImage(Long placeId) {
+    public PlaceResDto getPlaceDto(Long placeId) {
+        byte[] image = getPlaceImage(placeId);
+        imageService.saveImage(placeId, image);
+        return PlaceResDto.builder().placeId(placeId).image(image).build();
+    }
+
+    public byte[] getPlaceImage(Long placeId){
         // S3에 존재하는지 확인
         byte[] imageData = imageService.fetchImage(placeId);
-        if (imageData != null) return PlaceResDto.builder().placeId(placeId).image(imageData).build();
+        if (imageData != null) return imageData;
 
-        // Google Place API
         String googlePlaceId = getGooglePlaceId(placeId);
         String photoName = getPlacePhotoName(googlePlaceId);
 
-        // 응답받은 이미지 파일을 S3에 업로드 후 반환
         imageData = googlePlaceService.getPlaceImage(photoName);
         imageService.saveImage(placeId, imageData);
-        return PlaceResDto.builder().placeId(placeId).image(imageData).build();
+        return imageData;
+    }
+
+    public Place getPlace(Long placeId) {
+        return placeRepository.findById(placeId).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 장소입니다: " + placeId)
+        );
+    }
+
+    public List<Place> getPlacesInOrder(List<Long> placeIds){
+        return placeRepository.findByIdInOrderById(placeIds);
     }
 
     public PlaceListResDto getRecommendedImages(PlaceListReqDto dto) {
-        List<PlaceResDto> recommended = dto.places().parallelStream().map(this::getPlaceImage).toList();
+        List<PlaceResDto> recommended = dto.places().parallelStream().map(this::getPlaceDto).toList();
         return PlaceListResDto.builder().places(recommended).build();
     }
 

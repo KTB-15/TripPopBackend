@@ -12,6 +12,7 @@ import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.AuthorityRepository;
 import com.kakaotech.back.repository.MemberRepository;
 import com.kakaotech.back.util.SecurityUtil;
+import com.kakaotech.back.vo.TravelerInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class MemberService {
             throw new AlreadyExistsException(memberRequestDto.getMemberId() + "는 이미 존재하는 ID 입니다.");
         }
 
-        if(!authorityRepository.existsByAuthorityName("ROLE_USER")) {
+        if (!authorityRepository.existsByAuthorityName("ROLE_USER")) {
             authorityRepository.save(new Authority("ROLE_USER"));
         }
 
@@ -79,7 +80,7 @@ public class MemberService {
                         .orElseThrow(() -> new NotFoundException("Member not found"))
         );
     }
-  
+
     @Transactional
     public MemberSurveyDto updateSurvey(String id, MemberSurveyDto dto) {
         Member retrievedMember = memberRepository.findById(id).orElseThrow(

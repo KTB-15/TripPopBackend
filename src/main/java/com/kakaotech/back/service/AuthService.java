@@ -35,7 +35,7 @@ public class AuthService {
         // Access Token 생성
         String accessToken = tokenProvider.createAccessToken(authentication);
         // Refresh Token 생성
-        String refreshToken = tokenProvider.createRefreshToken(authentication, request);
+        String refreshToken = tokenProvider.createRefreshToken(authentication);
 
         return new TokenDto(accessToken, refreshToken);
     }

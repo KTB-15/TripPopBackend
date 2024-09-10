@@ -90,7 +90,7 @@ public class RecommendService {
     public RecResDto fetchRecommendedPlaces(RecReqDto request) {
         try {
             RecResDto response =  restClient.post()
-                    .uri(AI_SERVER_URL)
+                    .uri(AI_SERVER_URL+"/predict")
                     .body(request)
                     .retrieve()
                     .body(RecResDto.class);

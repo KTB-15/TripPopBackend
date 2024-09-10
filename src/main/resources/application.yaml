@@ -33,6 +33,8 @@ spring:
             scope:
               - profile
               - account_email
+              - gender
+              - age_range
         provider:
           naver:
             authorization-uri: https://nid.naver.com/oauth2.0/authorize

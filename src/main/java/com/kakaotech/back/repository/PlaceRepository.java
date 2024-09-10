@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface PlaceRepository extends JpaRepository<Place, Long> {
     Optional<PlaceCoordVO> findCoordById(Long id);
     List<Place> findByIdInOrderById(List<Long> id);
+    List<Place> findByAreaNameInOrderById(List<String> areaNames);
 }

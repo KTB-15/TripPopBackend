@@ -32,7 +32,9 @@ aws:
   secret-key: ${AWS_SECRET_KEY}
   s3:
     bucket-name: ${AWS_BUCKET_NAME}
-    
+ai:
+  server:
+    url: ${AI_SERVER_URL}
 ---
 # local
 server:

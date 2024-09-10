@@ -40,28 +40,36 @@ public class Member {
     private Integer age = 20;
 
     @Column(name = "travel_style_1")
-    private Integer travelStyle1;
+    @Builder.Default()
+    private Integer travelStyle1 = 4;
 
     @Column(name = "travel_style_2")
-    private Integer travelStyle2;
+    @Builder.Default()
+    private Integer travelStyle2 = 4;
 
     @Column(name = "travel_style_3")
-    private Integer travelStyle3;
+    @Builder.Default()
+    private Integer travelStyle3 = 4;
 
     @Column(name = "travel_style_4")
-    private Integer travelStyle4;
+    @Builder.Default()
+    private Integer travelStyle4 = 4;
 
     @Column(name = "travel_style_5")
-    private Integer travelStyle5;
+    @Builder.Default()
+    private Integer travelStyle5 = 4;
 
     @Column(name = "travel_style_6")
-    private Integer travelStyle6;
+    @Builder.Default()
+    private Integer travelStyle6 = 4;
 
     @Column(name = "travel_style_7")
-    private Integer travelStyle7;
+    @Builder.Default()
+    private Integer travelStyle7 = 4;
 
     @Column(name = "travel_style_8")
-    private Integer travelStyle8;
+    @Builder.Default()
+    private Integer travelStyle8 = 4;
 
     @CreatedDate
     @Column(columnDefinition = "TIMESTAMP")

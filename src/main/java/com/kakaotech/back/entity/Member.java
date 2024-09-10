@@ -33,9 +33,11 @@ public class Member {
     private String nickname;
 
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    @Builder.Default()
+    private Gender gender = Gender.MALE;
 
-    private Integer age;
+    @Builder.Default()
+    private Integer age = 20;
 
     @Column(name = "travel_style_1")
     private Integer travelStyle1;

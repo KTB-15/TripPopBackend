@@ -24,13 +24,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         logger.info("oAuth2User check : " + oAuth2User);
@@ -42,12 +41,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             //oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
         }
         else if (registrationId.equals("google")) {
+            logger.info("goolge input");
             oAuth2Response = (OAuth2Response) new GoogleResponse(oAuth2User.getAttributes());
         }
         else if (registrationId.equals("kakao")){
             // TODO: Kakao OAuth 추가
             //oAuth2Response = new KakaoResponse(oAuth2User.getAttributes());
         } else {
+
+            logger.info("not exists oauth");
             return null;
         }
 
@@ -56,6 +58,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Optional<Member> existData = memberRepository.findOneWithAuthoritiesByMemberId(memberId);
 
         UserDto userDto = null;
+        logger.info("userDto : " + userDto);
         if (existData.isEmpty()) {
             Authority authority = Authority.builder()
                     .authorityName("ROLE_USER")
@@ -73,7 +76,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         .authorities(Collections.singleton(authority))
                         .build();
             }
-
+            logger.info("member save: " + member);
             memberRepository.save(member);
         }
         else {

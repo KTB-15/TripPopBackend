@@ -46,7 +46,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return null;
         }
 
-        String memberId = oAuth2Response.getProvider()+ " " + oAuth2Response.getProviderId();
+        String memberId = oAuth2Response.getProviderId();
         Optional<Member> existData = memberRepository.findOneWithAuthoritiesByMemberId(memberId);
 
         UserDto userDto = null;

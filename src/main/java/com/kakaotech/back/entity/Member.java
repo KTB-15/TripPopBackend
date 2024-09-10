@@ -40,10 +40,6 @@ public class Member {
     @NotNull(message = "Age cannot be null")
     private Integer age;
 
-    @ManyToOne
-    @JoinColumn(name = "travel_like_sgg")
-    private SGG travelLikeSGG;
-
     @Column(name = "travel_style_1")
     private Integer travelStyle1;
 

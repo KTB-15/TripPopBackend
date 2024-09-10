@@ -17,7 +17,7 @@ public class PlaceController {
 
     @PostMapping("/image")
     public ResponseEntity<PlaceResDto> getPlaceImage(@RequestBody PlaceReqDto placeReqDto) {
-        return ResponseEntity.ok(placeService.getPlaceImage(placeReqDto.placeId()));
+        return ResponseEntity.ok(placeService.getPlaceDto(placeReqDto.placeId()));
     }
 
     @PostMapping("/recommended")

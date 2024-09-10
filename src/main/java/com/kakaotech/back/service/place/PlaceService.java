@@ -29,6 +29,10 @@ public class PlaceService {
     private final PlaceImageService imageService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public List<Place> getPlacesByAreaNames(List<String> areaNames){
+        return placeRepository.findByAreaNameInOrderById(areaNames);
+    }
+
     public PlaceResDto getPlaceDto(Long placeId) {
         byte[] image = getPlaceImage(placeId);
         imageService.saveImage(placeId, image);

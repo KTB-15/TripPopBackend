@@ -3,6 +3,7 @@ package com.kakaotech.back.jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -15,7 +16,7 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
     public void configure(HttpSecurity http) {
         http.addFilterBefore(
                 new JwtFilter(tokenProvider),
-                UsernamePasswordAuthenticationFilter.class
+                OAuth2LoginAuthenticationFilter.class
         );
     }
 }

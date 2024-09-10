@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtFilter, OAuth2LoginAuthenticationFilter.class);
+                .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
 
         return http.build();
     }

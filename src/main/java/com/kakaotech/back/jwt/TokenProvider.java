@@ -1,6 +1,10 @@
 package com.kakaotech.back.jwt;
 
+import com.kakaotech.back.entity.Authority;
+import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.entity.RefreshToken;
+import com.kakaotech.back.repository.AuthorityRepository;
+import com.kakaotech.back.repository.MemberRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,6 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Key;
 import java.util.*;
@@ -26,7 +31,8 @@ import java.util.stream.Collectors;
 public class TokenProvider implements InitializingBean {
 
     private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
-
+    private final MemberRepository memberRepository;
+    private final AuthorityRepository authorityRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private static final String AUTHORITIES_KEY = "auth";
     private final String secret;
@@ -35,9 +41,11 @@ public class TokenProvider implements InitializingBean {
     private Key key;
 
     public TokenProvider(
-            RedisTemplate<String, Object> redisTemplate, @Value("${jwt.secret}") String secret,
+            MemberRepository memberRepository, AuthorityRepository authorityRepository, RedisTemplate<String, Object> redisTemplate, @Value("${jwt.secret}") String secret,
             @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInMilliSeconds,
             @Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInMilliseconds) {
+        this.memberRepository = memberRepository;
+        this.authorityRepository = authorityRepository;
         this.redisTemplate = redisTemplate;
         this.secret = secret;
         this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliSeconds;
@@ -66,6 +74,7 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
+    @Transactional
     public String createRefreshToken(Authentication authentication){
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -91,8 +100,22 @@ public class TokenProvider implements InitializingBean {
                 "refreshToken:" + authentication.getName(),
                 refreshTokenObj,
                 refreshTokenValidityInMilliseconds,
-                TimeUnit.MILLISECONDS
-        );
+                TimeUnit.MILLISECONDS);
+
+        // PostgreSQL에 저장
+        Authority authority = Authority.builder()
+                .authorityName("ROLE_USER")
+                .build();
+        if(!authorityRepository.existsByAuthorityName("ROLE_USER")) authorityRepository.save(authority);
+
+        if(memberRepository.existsByMemberId(authentication.getName())) { return refreshToken; }
+
+        Member member = Member.builder()
+                        .memberId(authentication.getName())
+                .authorities(Collections.singleton(authority))
+                .activated(true)
+                .build();
+        memberRepository.save(member);
 
         return refreshToken;
     }

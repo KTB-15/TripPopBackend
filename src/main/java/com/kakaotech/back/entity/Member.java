@@ -28,16 +28,13 @@ public class Member {
     @NotBlank(message = "Member ID cannot be blank")
     private String memberId;
 
-    @NotBlank
     private String password;
 
     private String nickname;
 
-    @NotNull(message = "Gender cannot be null")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @NotNull(message = "Age cannot be null")
     private Integer age;
 
     @Column(name = "travel_style_1")

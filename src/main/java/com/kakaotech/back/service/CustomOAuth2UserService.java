@@ -6,7 +6,6 @@ import com.kakaotech.back.entity.Member;
 import com.kakaotech.back.repository.AuthorityRepository;
 import com.kakaotech.back.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -44,7 +43,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
         else if (registrationId.equals("kakao")){
             // TODO: Kakao OAuth 추가
-            //oAuth2Response = new KakaoResponse(oAuth2User.getAttributes());
+            System.out.println("oAuth2User.getAttributes() :  "+ oAuth2User.getAttributes());
+            oAuth2Response = new KakaoResponse(oAuth2User.getAttributes(), oAuth2User.getAttributes());
         } else {
 
             logger.info("not exists oauth");
@@ -89,7 +89,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         .memberId(memberId)
                         .authorities(Collections.singleton(authority))
                         .build();
+            } else if(oAuth2Response instanceof KakaoResponse) {
+                member = Member.builder()
+                        .memberId(memberId)
+                        .gender(((KakaoResponse) oAuth2Response).getGender())
+                        .age(((KakaoResponse) oAuth2Response).getAge())
+                        .authorities(Collections.singleton(authority))
+                        .activated(true)
+                        .build();
+
+                userDto = UserDto.builder()
+                        .name(oAuth2Response.getName())
+                        .memberId(memberId)
+                        .authorities(Collections.singleton(authority))
+                        .build();
             }
+
             logger.info("member save: " + member);
             memberRepository.save(member);
         }

@@ -67,11 +67,6 @@ public class RecommendService {
         return result;
     }
 
-    private List<Place> getRecommendedPlaces(TravelerInfoVO travelerInfo) {
-        List<Long> placeIds = List.of(50L, 51L, 52L, 53L, 54L, 56L, 57L, 58L, 59L, 60L);
-        return placeService.getPlacesInOrder(placeIds);
-    }
-
     private List<Place> getRecommendedPlaces(RecReqDto dto) {
         RecResDto response = fetchRecommendedPlaces(dto);
         return placeService.getPlacesByAreaNames(response.recommended_places());

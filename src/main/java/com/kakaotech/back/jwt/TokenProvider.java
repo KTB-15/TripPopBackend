@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,20 +103,27 @@ public class TokenProvider implements InitializingBean {
                 refreshTokenValidityInMilliseconds,
                 TimeUnit.MILLISECONDS);
 
-        // PostgreSQL에 저장
-        Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
-        if(!authorityRepository.existsByAuthorityName("ROLE_USER")) authorityRepository.save(authority);
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) authentication;
+            String registrationId = oauth2Token.getAuthorizedClientRegistrationId();
 
-        if(memberRepository.existsByMemberId(authentication.getName())) { return refreshToken; }
+            if ("google".equalsIgnoreCase(registrationId)) {
+                // PostgreSQL에 저장
+                Authority authority = Authority.builder()
+                        .authorityName("ROLE_USER")
+                        .build();
+                if(!authorityRepository.existsByAuthorityName("ROLE_USER")) authorityRepository.save(authority);
 
-        Member member = Member.builder()
+                if(memberRepository.existsByMemberId(authentication.getName())) { return refreshToken; }
+
+                Member member = Member.builder()
                         .memberId(authentication.getName())
-                .authorities(Collections.singleton(authority))
-                .activated(true)
-                .build();
-        memberRepository.save(member);
+                        .authorities(Collections.singleton(authority))
+                        .activated(true)
+                        .build();
+                memberRepository.save(member);
+            }
+        }
 
         return refreshToken;
     }

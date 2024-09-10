@@ -1,11 +1,9 @@
 package com.kakaotech.back.service;
 
-import com.kakaotech.back.dto.oauth.CustomOAuth2User;
-import com.kakaotech.back.dto.oauth.GoogleResponse;
-import com.kakaotech.back.dto.oauth.OAuth2Response;
-import com.kakaotech.back.dto.oauth.UserDto;
+import com.kakaotech.back.dto.oauth.*;
 import com.kakaotech.back.entity.Authority;
 import com.kakaotech.back.entity.Member;
+import com.kakaotech.back.repository.AuthorityRepository;
 import com.kakaotech.back.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +22,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+    private final AuthorityRepository authorityRepository;
     private final MemberRepository memberRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -38,10 +37,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2Response oAuth2Response = null;
         if (registrationId.equals("naver")) {
             // TODO: Naver OAuth 추가
-            //oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
+            oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
         }
         else if (registrationId.equals("google")) {
-            logger.info("goolge input");
             oAuth2Response = (OAuth2Response) new GoogleResponse(oAuth2User.getAttributes());
         }
         else if (registrationId.equals("kakao")){
@@ -60,14 +58,30 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         UserDto userDto = null;
         logger.info("userDto : " + userDto);
         if (existData.isEmpty()) {
+
             Authority authority = Authority.builder()
                     .authorityName("ROLE_USER")
                     .build();
+            if(!authorityRepository.existsByAuthorityName("ROLE_USER")) authorityRepository.save(authority);
 
             Member member = null;
             if(oAuth2Response instanceof GoogleResponse){
                 member = Member.builder()
                         .memberId(memberId)
+                        .build();
+
+                userDto = UserDto.builder()
+                        .name(oAuth2Response.getName())
+                        .memberId(memberId)
+                        .authorities(Collections.singleton(authority))
+                        .build();
+            } else if(oAuth2Response instanceof NaverResponse){
+                member = Member.builder()
+                        .memberId(memberId)
+                        .gender(((NaverResponse) oAuth2Response).getGender())
+                        .age(((NaverResponse) oAuth2Response).getAge())
+                        .authorities(Collections.singleton(authority))
+                        .activated(true)
                         .build();
 
                 userDto = UserDto.builder()

@@ -81,6 +81,9 @@ src
 ### 변경한 DB
 <img width="485" alt="스크린샷 2024-09-23 오후 1 18 21" src="https://github.com/user-attachments/assets/8e34f713-ad7b-49c3-ab43-d6de12abed9f">
 
+## 🔨 이미지 응답
+<img width="811" alt="스크린샷 2024-09-23 오후 1 22 19" src="https://github.com/user-attachments/assets/b5fea3cb-8233-4169-8fad-fb26cf47f4b8">
+
 
 ## 🔨 OAuth2 시퀀스 다이어 그램
 <img width="530" alt="스크린샷 2024-09-23 오후 1 19 48" src="https://github.com/user-attachments/assets/856b053b-88db-471d-a385-98e9a682db90">

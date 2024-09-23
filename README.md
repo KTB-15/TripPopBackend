@@ -44,22 +44,10 @@
 - 상품 리스트 조회 및 세부 사항 조회
 - 마이페이지
 
-## 💻 Getting Started
-
-### Installation
-```
-yarn install
-```
-### Develop Mode
-```
-yarn dev
-```
-
 ## 🔧 Stack
-- **Language**: TypeScript
-- **Library & Framework** : React.js + Vite
-- **Status Management** : Zustand
-- **CSS** : Tailwindcss
+- **Language**: Java
+- **Library & Framework** : Spring Framework, JPA, Spring Security, OAuth2, JWT
+- **Database** : PostgreSQL, Redis
 
 ## :open_file_folder: Project Structure
 

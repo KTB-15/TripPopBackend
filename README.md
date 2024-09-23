@@ -82,6 +82,10 @@ src
 <img width="485" alt="스크린샷 2024-09-23 오후 1 18 21" src="https://github.com/user-attachments/assets/8e34f713-ad7b-49c3-ab43-d6de12abed9f">
 
 
+## 🔨 OAuth2 시퀀스 다이어 그램
+<img width="530" alt="스크린샷 2024-09-23 오후 1 19 48" src="https://github.com/user-attachments/assets/856b053b-88db-471d-a385-98e9a682db90">
+
+
 **etc**
 
 - PR을 통한 코드 개선

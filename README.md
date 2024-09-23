@@ -86,8 +86,7 @@ src
 <img width="530" alt="스크린샷 2024-09-23 오후 1 19 48" src="https://github.com/user-attachments/assets/856b053b-88db-471d-a385-98e9a682db90">
 
 
-**etc**
-
+## 🔨 etc
 - PR을 통한 코드 개선
 
 ## 👨‍👩‍👧‍👦 Developer

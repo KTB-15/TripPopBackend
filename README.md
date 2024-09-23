@@ -74,11 +74,13 @@ src
 └── vo
 ```
 
-## 🔨 Improvement (공통 API 처리)
-<p float="left">
-    <img width="500" alt="스크린샷 2024-09-23 오전 10 59 48" src="https://github.com/user-attachments/assets/488254fb-e044-49b5-81dc-16f03276e0ce">
-    <img width="500" alt="스크린샷 2024-09-23 오전 11 00 14" src="https://github.com/user-attachments/assets/e8e66345-eaa0-486b-8177-031a0f61a674">
-</p>
+## 🔨 DB 설계
+### 기존 DB
+<img width="1122" alt="스크린샷 2024-09-23 오후 1 17 25" src="https://github.com/user-attachments/assets/bc96b484-75cd-4d2a-8ee9-ce7d77c610a2">
+
+### 변경한 DB
+<img width="485" alt="스크린샷 2024-09-23 오후 1 18 21" src="https://github.com/user-attachments/assets/8e34f713-ad7b-49c3-ab43-d6de12abed9f">
+
 
 **etc**
 

@@ -53,25 +53,25 @@
 
 ```markdown
 src
-├── api
-├── assets
-│   ├── font
-├── components
-│   ├── common
-│       └── icon
-│   ├── layout
-│       └── header
+├── common
+│   └── exception
+├── config
+├── controller
+├── dto
+│   ├── auth
+│   ├── favourite
+│   ├── member
+│   ├── oauth
 │   ├── place
-│       ├── card
-│       └── review
-│   ├── survey
-│   └── userinfo
-│       └── card
-├── data
-├── hooks
-├── pages
-│   └── userinfo
-└── stores
+│   └── recommendation
+├── entity
+│   └── enums
+├── jwt
+├── repository
+├── service
+│   └── place
+├── util
+└── vo
 ```
 
 ## 🔨 Improvement (공통 API 처리)
